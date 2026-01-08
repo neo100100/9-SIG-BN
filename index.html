@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Army Duty Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>ARMY DUTY</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-tab="dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li data-tab="person">
+                        <i class="fas fa-users"></i>
+                        <span>All Person</span>
+                    </li>
+                    <li data-tab="roster">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Duty Roster</span>
+                    </li>
+
+                    <li data-tab="posts">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Duty Posts</span>
+                    </li>
+                    <li data-tab="reports">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Reports</span>
+                    </li>
+                    <li data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-status">
+                    <div class="status-indicator online"></div>
+                    <span>System Active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search records...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn-notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name">Maj. General Rahman</span>
+                            <span class="user-rank">Commanding Officer</span>
+                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Rahman&background=2d3436&color=fff" alt="Profile"
+                            class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <section class="content-area" id="content-area">
+                <!-- Content will be loaded here via JS -->
+                <div class="dashboard-loading">Initializing Tactical Dashboard...</div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
