@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>9 SIG BN Management System</title>
+    <title>Vehicle Management System</title>
     <style>
         :root {
             --bg-dark: #0a0a0a;
@@ -19,6 +19,7 @@
             --border-color: rgba(255, 255, 255, 0.1);
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --secondary-bg: #1a1a1a;
         }
 
         * {
@@ -232,6 +233,17 @@
             width: 100%;
             font-size: 1rem;
             padding: 0;
+        }
+
+        select,
+        option {
+            background-color: #1a1a1a !important;
+            color: white !important;
+        }
+
+        select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .topbar-actions {
@@ -1023,6 +1035,125 @@
             font-family: monospace;
             margin-left: auto;
         }
+
+        /* Developer Profile Card */
+        .dev-profile-card {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.98), rgba(30, 30, 30, 0.98)) !important;
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 229, 255, 0.2) !important;
+            border-radius: 24px !important;
+            padding: 40px !important;
+            text-align: center;
+            width: 400px !important;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.1) !important;
+        }
+
+        .dev-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent-color);
+            padding: 5px;
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 30px var(--accent-glow);
+            overflow: hidden;
+            animation: floatAvatar 6s ease-in-out infinite;
+        }
+
+        .dev-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dev-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin: 10px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .dev-role {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: white !important;
+        }
+
+        .social-btn.facebook {
+            color: #1877F2;
+            border-color: rgba(24, 119, 242, 0.3);
+        }
+
+        .social-btn.instagram {
+            color: #E4405F;
+            border-color: rgba(228, 64, 95, 0.3);
+        }
+
+        .social-btn.tiktok {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .social-btn.github {
+            color: #f0f6fc;
+            border-color: rgba(240, 246, 252, 0.3);
+        }
+
+        .social-btn.youtube {
+            color: #FF0000;
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .social-btn.discord {
+            color: #5865F2;
+            border-color: rgba(88, 101, 242, 0.3);
+        }
+
+        @keyframes floatAvatar {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -1105,7 +1236,7 @@
                 "Motorcycle": ["Motorcycle"]
             },
             professions: ["Technician", "Operator", "Driver Signal", "Clerk", "SMT Clerk"],
-            sections: ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "RP", "MT"],
+            sections: ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "209 COY"],
             unitsData: { "9 SIG BN": [], "Army Camp": ["Narsindi Camp", "Sippur Camp"] },
 
             // Filter State
@@ -1241,7 +1372,7 @@
                         if (this.professions.length === 0) this.professions = ["Technician", "Operator", "Driver Signal", "Clerk", "SMT Clerk"];
 
                         this.sections = this.safeArray(data.sections);
-                        if (this.sections.length === 0) this.sections = ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "RP", "MT"];
+                        if (this.sections.length === 0) this.sections = ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "209 COY"];
 
                         this.unitsData = data.unitsData || {};
                         // Fix: If unitsData is empty or not an object, restore defaults
@@ -1262,7 +1393,7 @@
                     alert("Failed to connect to Tactical Database (Firebase). Working offline.");
                     // Ensure defaults exist even offline
                     if (this.professions.length === 0) this.professions = ["Technician", "Operator", "Driver Signal", "Clerk", "SMT Clerk"];
-                    if (this.sections.length === 0) this.sections = ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "RP", "MT"];
+                    if (this.sections.length === 0) this.sections = ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "209 COY"];
                     if (Object.keys(this.unitsData).length === 0) this.unitsData = { "9 SIG BN": [], "Army Camp": ["Narsindi Camp", "Sippur Camp"] };
                     this.setPage('vehicles');
                 }
@@ -1947,7 +2078,10 @@
                         <button class="view-mode-btn ${this.vehicleViewMode === 'grid' ? 'active' : ''}" 
                             onclick="app.setVehicleViewMode('grid')" title="Grid View"><i class="fas fa-th-large"></i></button>
                     </div>
-                    <button class="btn-primary" onclick="app.showAddVehicleModal()"><i class="fas fa-plus"></i> Add Vehicle</button>
+                    <button class="btn-primary" onclick="app.showAddVehicleModal()" style="margin-right: 10px;"><i class="fas fa-plus"></i> Add Vehicle</button>
+                    <button class="btn-primary" onclick="app.openDevModal()" style="background: linear-gradient(135deg, #00e5ff, #00b0ff); color: #000; border: none; font-weight: 800;">
+                        <i class="fas fa-user-tie"></i> Web Developer
+                    </button>
                 </div>
             </div>
 
@@ -2040,9 +2174,10 @@
                                 <th>Category</th>
                                 <th>Type</th>
                                 <th>Company</th>
-                                <th>Current KM</th>
-                                <th>Engine Oil</th>
-                                <th>Oil Filter</th>
+                                <th>KM</th>
+                                <th>Engine</th>
+                                <th>Trans</th>
+                                <th>Filter</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -2056,9 +2191,10 @@
                                     <td style="font-size: 0.85rem; color: var(--accent-color);">${v.company || 'N/A'}</td>
                                     <td style="font-family: monospace;">${v.currentKm}</td>
                                     <td>${this.renderMiniDateStatus(v.dates?.engineOil)}</td>
+                                    <td>${this.renderMiniDateStatus(v.dates?.transmissionOil)}</td>
                                     <td>${this.renderMiniDateStatus(v.dates?.oilFilter)}</td>
                                     <td>
-                                        ${this.isVehicleDue(v) ? '<span class="status-badge active">Service Due</span>' : ''}
+                                        ${this.isVehicleDue(v) ? '<span class="status-badge active">Due</span>' : '<span class="status-badge completed">OK</span>'}
                                     </td>
                                     <td>
                                         <i class="fas fa-wrench" onclick="event.stopPropagation(); app.showEditVehicleModal('${v.id}')" style="color:var(--accent-color); cursor:pointer; margin-right:12px;" title="Update Status"></i>
@@ -2217,13 +2353,14 @@
                 </div>
 
                 <div class="maintenance-list">
-                    ${this.renderDateItem('Engine Oil', v.dates.engineOil)}
-                    ${this.renderDateItem('Transmission Oil', v.dates.transmissionOil)}
-                    ${this.renderDateItem('Oil Filter', v.dates.oilFilter)}
-                    ${this.renderDateItem('Fuel Filter', v.dates.fuelFilter)}
-                    ${this.renderDateItem('Air Filter', v.dates.airFilter)}
-                    ${this.renderDateItem('Battery Change', v.dates.battery)}
-                    ${this.renderDateItem('Anti-Corrosion', v.dates.antiCorrosion)}
+                    ${this.renderDateItem('Engine Oil', v.dates?.engineOil)}
+                    ${this.renderDateItem('Transmission Oil', v.dates?.transmissionOil)}
+                    ${this.renderDateItem('Coolant', v.dates?.coolant)}
+                    ${this.renderDateItem('Oil Filter', v.dates?.oilFilter)}
+                    ${this.renderDateItem('Primary Fuel Filter', v.dates?.fuelFilterPrimary)}
+                    ${this.renderDateItem('Secondary Fuel Filter', v.dates?.fuelFilterSecondary)}
+                    ${this.renderDateItem('Air Cleaner Filter', v.dates?.airFilter)}
+                    ${this.renderDateItem('Battery Change', v.dates?.battery)}
                 </div>
 
                 <div class="vehicle-actions">
@@ -2314,11 +2451,12 @@
                 if (v.dates) {
                     check(v.dates.engineOil, 'Engine Oil');
                     check(v.dates.transmissionOil, 'Transmission Oil');
+                    check(v.dates.coolant, 'Coolant');
                     check(v.dates.oilFilter, 'Oil Filter');
-                    check(v.dates.fuelFilter, 'Fuel Filter');
+                    check(v.dates.fuelFilterPrimary, 'Primary Fuel Filter');
+                    check(v.dates.fuelFilterSecondary, 'Secondary Fuel Filter');
                     check(v.dates.airFilter, 'Air Filter');
                     check(v.dates.battery, 'Battery');
-                    check(v.dates.antiCorrosion, 'Anti-Corrosion');
                 }
                 return alerts;
             },
@@ -2393,6 +2531,15 @@
                             <input type="date" id="v-date-trans" style="padding:8px; font-size:0.85rem;">
                         </div>
                         <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Coolant</label>
+                            <select id="v-dur-coolant" onchange="app.setMaintenanceDate('v-dur-coolant', 'v-date-coolant')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
+                                <option value="">Set Duration...</option>
+                                <option value="12">1 Year</option>
+                                <option value="24">2 Years</option>
+                            </select>
+                            <input type="date" id="v-date-coolant" style="padding:8px; font-size:0.85rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
                             <label style="font-size:0.8rem;">Oil Filter</label>
                             <select id="v-dur-oilfilt" onchange="app.setMaintenanceDate('v-dur-oilfilt', 'v-date-oilfilt')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
                                 <option value="">Set Duration...</option>
@@ -2403,14 +2550,24 @@
                             <input type="date" id="v-date-oilfilt" style="padding:8px; font-size:0.85rem;">
                         </div>
                         <div class="form-group" style="margin-bottom:10px;">
-                            <label style="font-size:0.8rem;">Fuel Filter</label>
-                            <select id="v-dur-fuelfilt" onchange="app.setMaintenanceDate('v-dur-fuelfilt', 'v-date-fuelfilt')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
+                            <label style="font-size:0.8rem;">Primary Fuel Filter</label>
+                            <select id="v-dur-fuelfilt-pri" onchange="app.setMaintenanceDate('v-dur-fuelfilt-pri', 'v-date-fuelfilt-pri')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
                                 <option value="">Set Duration...</option>
                                 <option value="6">6 Months</option>
                                 <option value="12">1 Year</option>
                                 <option value="24">2 Years</option>
                             </select>
-                            <input type="date" id="v-date-fuelfilt" style="padding:8px; font-size:0.85rem;">
+                            <input type="date" id="v-date-fuelfilt-pri" style="padding:8px; font-size:0.85rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Secondary Fuel Filter</label>
+                            <select id="v-dur-fuelfilt-sec" onchange="app.setMaintenanceDate('v-dur-fuelfilt-sec', 'v-date-fuelfilt-sec')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
+                                <option value="">Set Duration...</option>
+                                <option value="6">6 Months</option>
+                                <option value="12">1 Year</option>
+                                <option value="24">2 Years</option>
+                            </select>
+                            <input type="date" id="v-date-fuelfilt-sec" style="padding:8px; font-size:0.85rem;">
                         </div>
                         <div class="form-group" style="margin-bottom:10px;">
                             <label style="font-size:0.8rem;">Air Filter</label>
@@ -2423,21 +2580,13 @@
                             <input type="date" id="v-date-airfilt" style="padding:8px; font-size:0.85rem;">
                         </div>
                         <div class="form-group" style="margin-bottom:10px;">
-                            <label style="font-size:0.8rem;">Battery/Other</label>
+                            <label style="font-size:0.8rem;">Battery</label>
                             <select id="v-dur-bat" onchange="app.setMaintenanceDate('v-dur-bat', 'v-date-bat')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
                                 <option value="">Set Duration...</option>
                                 <option value="12">1 Year</option>
                                 <option value="24">2 Years</option>
                             </select>
                             <input type="date" id="v-date-bat" style="padding:8px; font-size:0.85rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom:10px;">
-                            <label style="font-size:0.8rem;">Anti-Corrosion</label>
-                            <select id="v-dur-anti" onchange="app.setMaintenanceDate('v-dur-anti', 'v-date-anti')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
-                                <option value="">Set Duration...</option>
-                                <option value="12">1 Year</option>
-                            </select>
-                            <input type="date" id="v-date-anti" style="padding:8px; font-size:0.85rem;">
                         </div>
                     </div>
                 </div>
@@ -2470,11 +2619,12 @@
                     dates: {
                         engineOil: document.getElementById('v-date-eng').value,
                         transmissionOil: document.getElementById('v-date-trans').value,
+                        coolant: document.getElementById('v-date-coolant').value,
                         oilFilter: document.getElementById('v-date-oilfilt').value,
-                        fuelFilter: document.getElementById('v-date-fuelfilt').value,
+                        fuelFilterPrimary: document.getElementById('v-date-fuelfilt-pri').value,
+                        fuelFilterSecondary: document.getElementById('v-date-fuelfilt-sec').value,
                         airFilter: document.getElementById('v-date-airfilt').value,
-                        battery: document.getElementById('v-date-bat').value,
-                        antiCorrosion: document.getElementById('v-date-anti').value
+                        battery: document.getElementById('v-date-bat').value
                     }
                 };
 
@@ -2551,6 +2701,15 @@
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Coolant</label>
+                            <input type="date" id="edit-v-date-coolant" value="${v.dates?.coolant || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
+                            <select id="edit-v-dur-coolant" onchange="app.setMaintenanceDate('edit-v-dur-coolant', 'edit-v-date-coolant')" style="padding:8px; font-size:0.8rem;">
+                                <option value="">Reset Duration...</option>
+                                <option value="12">+1 Year</option>
+                                <option value="24">+2 Years</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
                             <label style="font-size:0.8rem;">Oil Filter</label>
                             <input type="date" id="edit-v-date-oilfilt" value="${v.dates?.oilFilter || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
                             <select id="edit-v-dur-oilfilt" onchange="app.setMaintenanceDate('edit-v-dur-oilfilt', 'edit-v-date-oilfilt')" style="padding:8px; font-size:0.8rem;">
@@ -2559,9 +2718,17 @@
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom:10px;">
-                            <label style="font-size:0.8rem;">Fuel Filter</label>
-                            <input type="date" id="edit-v-date-fuelfilt" value="${v.dates?.fuelFilter || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
-                            <select id="edit-v-dur-fuelfilt" onchange="app.setMaintenanceDate('edit-v-dur-fuelfilt', 'edit-v-date-fuelfilt')" style="padding:8px; font-size:0.8rem;">
+                            <label style="font-size:0.8rem;">Primary Fuel Filter</label>
+                            <input type="date" id="edit-v-date-fuelfilt-pri" value="${v.dates?.fuelFilterPrimary || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
+                            <select id="edit-v-dur-fuelfilt-pri" onchange="app.setMaintenanceDate('edit-v-dur-fuelfilt-pri', 'edit-v-date-fuelfilt-pri')" style="padding:8px; font-size:0.8rem;">
+                                <option value="">Reset Duration...</option>
+                                <option value="12">+1 Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Secondary Fuel Filter</label>
+                            <input type="date" id="edit-v-date-fuelfilt-sec" value="${v.dates?.fuelFilterSecondary || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
+                            <select id="edit-v-dur-fuelfilt-sec" onchange="app.setMaintenanceDate('edit-v-dur-fuelfilt-sec', 'edit-v-date-fuelfilt-sec')" style="padding:8px; font-size:0.8rem;">
                                 <option value="">Reset Duration...</option>
                                 <option value="12">+1 Year</option>
                             </select>
@@ -2580,14 +2747,6 @@
                             <select id="edit-v-dur-bat" onchange="app.setMaintenanceDate('edit-v-dur-bat', 'edit-v-date-bat')" style="padding:8px; font-size:0.8rem;">
                                 <option value="">Reset Duration...</option>
                                 <option value="24">+2 Years</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="margin-bottom:10px;">
-                            <label style="font-size:0.8rem;">Anti-Corrosion</label>
-                            <input type="date" id="edit-v-date-anti" value="${v.dates?.antiCorrosion || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
-                            <select id="edit-v-dur-anti" onchange="app.setMaintenanceDate('edit-v-dur-anti', 'edit-v-date-anti')" style="padding:8px; font-size:0.8rem;">
-                                <option value="">Reset Duration...</option>
-                                <option value="12">+1 Year</option>
                             </select>
                         </div>
                     </div>
@@ -2618,11 +2777,12 @@
 
                     v.dates.engineOil = document.getElementById('edit-v-date-eng').value;
                     v.dates.transmissionOil = document.getElementById('edit-v-date-trans').value;
+                    v.dates.coolant = document.getElementById('edit-v-date-coolant').value;
                     v.dates.oilFilter = document.getElementById('edit-v-date-oilfilt').value;
-                    v.dates.fuelFilter = document.getElementById('edit-v-date-fuelfilt').value;
+                    v.dates.fuelFilterPrimary = document.getElementById('edit-v-date-fuelfilt-pri').value;
+                    v.dates.fuelFilterSecondary = document.getElementById('edit-v-date-fuelfilt-sec').value;
                     v.dates.airFilter = document.getElementById('edit-v-date-airfilt').value;
                     v.dates.battery = document.getElementById('edit-v-date-bat').value;
-                    v.dates.antiCorrosion = document.getElementById('edit-v-date-anti').value;
 
                     this.saveData();
                     this.renderVehicles();
@@ -3436,8 +3596,10 @@
             <button class="view-mode-btn ${this.personnelViewMode === 'grid' ? 'active' : ''}"
                 onclick="app.setPersonnelViewMode('grid')" title="Grid View"><i class="fas fa-th-large"></i></button>
         </div>
-        <button class="btn-primary" onclick="app.showAddSoldierModal()"><i class="fas fa-user-plus"></i> Add
-            Soldier</button>
+        <button class="btn-primary" onclick="app.showAddSoldierModal()" style="margin-right: 10px;"><i class="fas fa-user-plus"></i> Add Soldier</button>
+        <button class="btn-primary" onclick="app.openDevModal()" style="background: linear-gradient(135deg, #00e5ff, #00b0ff); color: #000; border: none; font-weight: 800;">
+            <i class="fas fa-user-tie"></i> Web Developer
+        </button>
     </div>
 </div>
 
@@ -3531,6 +3693,21 @@
     </div>
 </div>
 `;
+            },
+
+            openDevModal() {
+                const modal = document.getElementById('devModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    // Optional: add a class for animation if needed
+                }
+            },
+
+            closeDevModal() {
+                const modal = document.getElementById('devModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
             }
         };
     </script>
@@ -3541,6 +3718,14 @@
                     throw new Error("App object is not defined. Possible syntax error in script.");
                 }
                 app.init();
+
+                // Close Developer Modal on outside click
+                window.addEventListener('click', (e) => {
+                    const devModal = document.getElementById('devModal');
+                    if (e.target === devModal) {
+                        app.closeDevModal();
+                    }
+                });
             } catch (error) {
                 console.error("Initialization Error:", error);
                 alert("Critical System Error: " + error.message);
@@ -3549,6 +3734,42 @@
             }
         });
     </script>
+    <!-- Developer Modal -->
+    <div id="devModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content dev-profile-card">
+            <div class="dev-avatar">
+                <img src="https://i.postimg.cc/8CrhRkJG/IMG-9384.jpg" alt="Developer Profile">
+            </div>
+            <div class="dev-name">DEV-/-SOJIB HOSAIN</div>
+            <p class="dev-role">System Architect & Lead Developer</p>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/cjsojib100/" target="_blank" class="social-btn facebook"
+                    title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/cjsojib100/" target="_blank" class="social-btn instagram"
+                    title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/" target="_blank" class="social-btn tiktok" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://github.com/" target="_blank" class="social-btn github" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://youtube.com/" target="_blank" class="social-btn youtube" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://discord.gg/" target="_blank" class="social-btn discord" title="Discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+
+            <button class="btn-primary" onclick="app.closeDevModal()" style="margin-top: 30px; width: 100%;">Close
+                Profile</button>
+        </div>
+    </div>
 </body>
 
 </html>
