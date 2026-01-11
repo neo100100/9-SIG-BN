@@ -7,19 +7,18 @@
     <title>9 SIG BN Management System</title>
     <style>
         :root {
-            --primary-bg: #0f1416;
-            --secondary-bg: #1a2226;
-            --sidebar-bg: #0a0e10;
-            --accent-color: #d4af37;
-            /* Military Gold */
-            --accent-green: #4b634c;
-            /* Army Green */
+            --bg-dark: #0a0a0a;
+            --bg-sidebar: rgba(20, 20, 20, 0.4);
+            --bg-card: rgba(30, 30, 30, 0.4);
+            --accent-color: #00e5ff;
+            --accent-glow: rgba(0, 229, 255, 0.4);
             --text-primary: #ffffff;
-            --text-placeholder: #666666;
-            --text-secondary: #bdc3c7;
-            --border-color: #34495e;
-            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --text-secondary: #b0b0b0;
+            --danger: #ff4d4d;
+            --success: #00ff88;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -29,11 +28,37 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-bg);
+            font-family: 'Segoe UI', 'Inter', sans-serif;
+            background-color: var(--bg-dark);
             color: var(--text-primary);
-            overflow: hidden;
             height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 100%, transparent 0%);
+            z-index: -1;
+            animation: pulseBg 10s infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
         }
 
         .app-container {
@@ -44,108 +69,115 @@
         /* Sidebar Styling */
         .sidebar {
             width: 260px;
-            background-color: var(--sidebar-bg);
+            background: var(--bg-sidebar);
+            border-right: var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            z-index: 10;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
             transition: var(--transition);
         }
 
         .sidebar-header {
-            padding: 30px 20px;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: none;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 10px var(--accent-color));
         }
 
         .logo span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 1.6rem;
             color: var(--accent-color);
-            font-family: sans-serif;
         }
 
         .sidebar-nav {
             flex: 1;
-            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0;
         }
 
         .sidebar-nav ul {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .sidebar-nav li {
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-secondary);
-            border-left: 3px solid transparent;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-nav li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.1), transparent);
+            transition: width 0.3s ease;
         }
 
         .sidebar-nav li:hover {
-            background: rgba(212, 175, 55, 0.05);
-            color: var(--text-primary);
+            background: transparent;
+            color: white;
+            padding-left: 30px;
+        }
+
+        .sidebar-nav li:hover::before {
+            width: 100%;
         }
 
         .sidebar-nav li.active {
-            background: rgba(212, 175, 55, 0.1);
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.15), transparent);
             color: var(--accent-color);
             border-left: 3px solid var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .sidebar-nav i {
-            font-size: 1.1rem;
-            width: 20px;
-        }
-
-        .sidebar-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .user-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .status-indicator.online {
-            background-color: #2ecc71;
-            box-shadow: 0 0 10px #2ecc71;
-        }
-
-        /* Main Content area */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
+            padding: 30px 50px;
             overflow-y: auto;
         }
 
         .topbar {
-            height: 80px;
-            background-color: var(--secondary-bg);
+            height: auto;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            margin-bottom: 30px;
+            border-bottom: none;
         }
 
         .alert-pulse {
@@ -167,32 +199,39 @@
         }
 
         .search-bar {
-            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50px;
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .search-bar i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: static;
+            transform: none;
             color: var(--text-secondary);
         }
 
         .search-bar input {
-            width: 100%;
-            padding: 12px 15px 12px 45px;
-            background-color: var(--primary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            color: white;
             outline: none;
-            transition: var(--transition);
-        }
-
-        .search-bar input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+            width: 100%;
+            font-size: 1rem;
+            padding: 0;
         }
 
         .topbar-actions {
@@ -202,23 +241,44 @@
         }
 
         .btn-notification {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             color: var(--text-secondary);
             font-size: 1.2rem;
             cursor: pointer;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-notification:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .btn-notification .badge {
             position: absolute;
             top: -5px;
-            right: -8px;
-            background-color: #e74c3c;
+            right: -5px;
+            background: var(--danger);
             color: white;
-            font-size: 0.7rem;
-            padding: 2px 5px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-dark);
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
         }
 
         .user-profile {
@@ -281,83 +341,94 @@
             }
         }
 
-        /* Dashboard Components */
         .dashboard-header {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .dashboard-header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .dashboard-header p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            opacity: 0.8;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
 
         .stat-card {
-            background-color: var(--secondary-bg);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 24px;
+            border: var(--glass-border);
+            backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
-            gap: 20px;
-            transition: var(--transition);
+            gap: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+            pointer-events: none;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
             border-color: var(--accent-color);
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
-        }
-
-        .stat-card.active-duty .stat-icon {
-            color: #2ecc71;
-            background: rgba(46, 204, 113, 0.1);
-        }
-
-        .stat-card.standby .stat-icon {
-            color: #f1c40f;
-            background: rgba(241, 196, 15, 0.1);
-        }
-
-        .stat-card.leave .stat-icon {
-            color: #3498db;
-            background: rgba(52, 152, 219, 0.1);
+            font-size: 1.6rem;
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
         }
 
         .stat-info h3 {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 700;
             margin-bottom: 5px;
         }
 
         .stat-info .value {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .dashboard-content {
@@ -367,31 +438,50 @@
         }
 
         .panel {
-            background-color: var(--secondary-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: var(--glass-border);
+            backdrop-filter: blur(15px);
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .panel-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 25px;
+            border-bottom: var(--glass-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .panel-header h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .btn-link {
-            background: none;
-            border: none;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.2);
             color: var(--accent-color);
-            font-size: 0.85rem;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-link:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .data-table {
@@ -401,113 +491,101 @@
 
         .data-table th {
             text-align: left;
-            padding: 15px 20px;
-            font-size: 0.85rem;
+            padding: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: var(--glass-border);
+            background: rgba(255, 255, 255, 0.01);
         }
 
         .data-table td {
-            padding: 15px 20px;
+            padding: 20px;
             font-size: 0.9rem;
-            border-bottom: 1px solid rgba(44, 62, 80, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.2s;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .status-badge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .status-badge.active {
-            background-color: rgba(46, 204, 113, 0.1);
-            color: #2ecc71;
+            background: rgba(231, 76, 60, 0.1);
+            color: #ff4757;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.1);
         }
 
         .status-badge.completed {
-            background-color: rgba(52, 152, 219, 0.1);
-            color: #3498db;
-        }
-
-        .alert-panel .panel-body {
-            padding: 20px;
+            background: rgba(46, 213, 115, 0.1);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.2);
         }
 
         .alert-item {
             display: flex;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
             margin-bottom: 15px;
+            border: var(--glass-border);
+            transition: all 0.3s;
+        }
+
+        .alert-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.02);
         }
 
         .alert-item.high {
-            border-left: 3px solid #e74c3c;
-        }
-
-        .alert-item.high i {
-            color: #e74c3c;
+            border-left: 4px solid var(--danger);
+            box-shadow: -10px 0 20px rgba(255, 77, 77, 0.05);
         }
 
         .alert-item.mid {
-            border-left: 3px solid #f1c40f;
-        }
-
-        .alert-item.mid i {
-            color: #f1c40f;
-        }
-
-        .alert-content strong {
-            display: block;
-            font-size: 0.9rem;
-            margin-bottom: 3px;
-        }
-
-        .alert-content p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .stat-card {
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-color);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #f1c40f;
         }
 
         .stat-card.active-filter {
             border-color: var(--accent-color);
-            background: rgba(212, 175, 55, 0.05);
-            box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
-        }
-
-        .p-20 {
-            padding: 20px;
+            background: rgba(0, 229, 255, 0.05);
+            box-shadow: 0 0 20px var(--accent-glow), inset 0 0 10px var(--accent-glow);
         }
 
         .btn-primary {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color) 0%, #00bfdb 100%);
             color: #000;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: var(--transition);
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background-color: #f1c40f;
-            transform: scale(1.02);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px var(--accent-glow);
+            background: linear-gradient(135deg, #00ffea 0%, #00e5ff 100%);
         }
 
         /* Post Management Styles */
@@ -519,31 +597,26 @@
         }
 
         .post-card {
-            background-color: var(--secondary-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            transition: var(--transition);
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: var(--glass-border);
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            border-bottom: 3px solid var(--accent-green);
         }
 
         .post-card:hover {
+            transform: translateY(-10px);
             border-color: var(--accent-color);
-            box-shadow: var(--card-shadow);
-        }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 15px var(--accent-glow);
         }
 
         .post-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent-color);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
         }
 
         .post-id {
@@ -593,24 +666,28 @@
         .assign-btn {
             width: 100%;
             margin-top: 15px;
-            padding: 10px;
-            background: transparent;
-            border: 1px dashed var(--border-color);
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
             color: var(--text-secondary);
-            border-radius: 6px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 0.85rem;
-            transition: var(--transition);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .assign-btn:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
-            background: rgba(212, 175, 55, 0.05);
+            background: rgba(0, 229, 255, 0.05);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .delete-post {
@@ -631,28 +708,44 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
-            background: var(--secondary-bg);
-            width: 450px;
-            border-radius: 12px;
-            border: 1px solid var(--accent-color);
-            padding: 30px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+            background: rgba(30, 30, 30, 0.8);
+            width: 500px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 229, 255, 0.05);
+            backdrop-filter: blur(20px);
+            position: relative;
         }
 
         .modal-content h2 {
-            margin-bottom: 25px;
-            font-family: sans-serif;
-            color: var(--accent-color);
-            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: white;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-content h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .form-group {
@@ -669,18 +762,21 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 12px;
-            background: #000000;
-            border: 1px solid #444;
-            border-radius: 6px;
-            color: #ffffff;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
             outline: none;
-            font-size: 1rem;
+            transition: all 0.3s;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .form-actions {
@@ -932,84 +1028,64 @@
 </head>
 
 <body>
+    <div class="bg-mesh"></div>
     <div class="app-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
+        <div class="sidebar">
+            <div class="sidebar-header" onclick="app.setPage('vehicles')" style="cursor:pointer;">
                 <div class="logo">
-                    <i class="fas fa-shield-halved"></i>
+                    <div class="logo-icon"><i class="fas fa-truck-moving"></i></div>
                     <span>9 SIG BN</span>
                 </div>
             </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li class="active" data-tab="dashboard">
-                        <i class="fas fa-th-large"></i>
-                        <span>Dashboard</span>
-                    </li>
-                    <li data-tab="person">
-                        <i class="fas fa-users"></i>
-                        <span>All Person</span>
-                    </li>
-                    <li data-tab="roster">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Duty Roster</span>
-                    </li>
-
-                    <li data-tab="posts">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Duty List</span>
-                    </li>
-                    <li data-tab="vehicles">
-                        <i class="fas fa-truck-pickup"></i>
-                        <span>Vehicle Management</span>
-                    </li>
-                    <li data-tab="reports">
-                        <i class="fas fa-file-contract"></i>
-                        <span>Reports</span>
-                    </li>
-                    <li data-tab="settings">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
-                    </li>
-                </ul>
-            </nav>
+            <ul class="sidebar-nav">
+                <li onclick="app.setPage('vehicles')" data-tab="vehicles" class="active">
+                    <i class="fas fa-truck-moving"></i>
+                    <span>Management</span>
+                </li>
+                <li onclick="app.setPage('dashboard')" data-tab="dashboard">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </li>
+                <li onclick="app.setPage('person')" data-tab="person">
+                    <i class="fas fa-id-badge"></i>
+                    <span>Personnel Registry</span>
+                </li>
+                <li onclick="app.setPage('posts')" data-tab="posts">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Duty List</span>
+                </li>
+                <li onclick="app.setPage('roster')" data-tab="roster">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Duty Roster</span>
+                </li>
+                <li onclick="app.setPage('reports')" data-tab="reports">
+                    <i class="fas fa-file-signature"></i>
+                    <span>Reports</span>
+                </li>
+                <li onclick="app.setPage('settings')" data-tab="settings">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>System Config</span>
+                </li>
+            </ul>
             <div class="sidebar-footer">
                 <div class="user-status">
                     <div class="status-indicator online"></div>
-                    <span>System Active</span>
+                    <span>System Online</span>
                 </div>
             </div>
-        </aside>
+        </div>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="topbar">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search records...">
-                </div>
-                <div class="topbar-actions">
-                    <button class="btn-notification">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </button>
-                    <div class="user-profile">
-                        <div class="user-info">
-                            <span class="user-name">Maj. General Rahman</span>
-                            <span class="user-rank">Commanding Officer</span>
-                        </div>
-                        <img src="https://ui-avatars.com/api/?name=Rahman&background=2d3436&color=fff" alt="Profile"
-                            class="avatar">
-                    </div>
-                </div>
-            </header>
+        <!-- Main Content area -->
+        <div class="main-content">
+            <div class="topbar" style="display: none;">
+                <!-- Topbar hidden per user request to clean up UI -->
+            </div>
 
-            <section class="content-area" id="content-area">
-                <!-- Content will be loaded here via JS -->
-                <div class="dashboard-loading">Initializing Tactical Dashboard...</div>
-            </section>
-        </main>
+            <div id="content-area" class="content-area">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1042,6 +1118,7 @@
             currentVehicleTypeFilter: 'All',
             currentVehicleCompanyFilter: 'All',
             vehicleSearchQuery: '',
+            personnelSearchQuery: '',
             vehicleStatusFilter: 'All',
             selectedVehicleId: null,
             vehicleViewMode: 'grid', // 'grid' or 'list'
@@ -1179,7 +1256,7 @@
                         // Initialize if DB is empty
                         this.saveData();
                     }
-                    this.renderDashboard();
+                    this.setPage('vehicles');
                 } catch (error) {
                     console.error("Error loading data from Firebase:", error);
                     alert("Failed to connect to Tactical Database (Firebase). Working offline.");
@@ -1187,7 +1264,7 @@
                     if (this.professions.length === 0) this.professions = ["Technician", "Operator", "Driver Signal", "Clerk", "SMT Clerk"];
                     if (this.sections.length === 0) this.sections = ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "RP", "MT"];
                     if (Object.keys(this.unitsData).length === 0) this.unitsData = { "9 SIG BN": [], "Army Camp": ["Narsindi Camp", "Sippur Camp"] };
-                    this.renderDashboard();
+                    this.setPage('vehicles');
                 }
             },
 
@@ -1215,16 +1292,131 @@
                 }
             },
 
+            renderDashboard() {
+                const totalVehicles = this.vehicles.length;
+                const serviceDue = this.vehicles.filter(v => this.isVehicleDue(v)).length;
+                const lightVehicles = this.vehicles.filter(v => v.category === 'Light Vehicle').length;
+                const heavyVehicles = this.vehicles.filter(v => v.category === 'Heavy Vehicle').length;
+
+                this.contentArea.innerHTML = `
+<div class="dashboard-header">
+    <h1>Fleet Operational Overview</h1>
+    <p>Strategic status of the tactical motor pool and maintenance logs.</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-truck-pickup"></i></div>
+        <div class="stat-info">
+            <h3>Total Fleet</h3>
+            <div class="value">${totalVehicles}</div>
+        </div>
+    </div>
+    <div class="stat-card" style="${serviceDue > 0 ? 'border-color: #e74c3c; box-shadow: 0 0 20px rgba(231,76,60,0.2);' : ''}">
+        <div class="stat-icon" style="color:${serviceDue > 0 ? '#e74c3c' : 'var(--accent-color)'};">
+            <i class="fas fa-tools"></i>
+        </div>
+        <div class="stat-info">
+            <h3>Service Due</h3>
+            <div class="value" style="color:${serviceDue > 0 ? '#e74c3c' : 'white'};">${serviceDue}</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-car-side"></i></div>
+        <div class="stat-info">
+            <h3>Light Vehicles</h3>
+            <div class="value">${lightVehicles}</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-truck-moving"></i></div>
+        <div class="stat-info">
+            <h3>Heavy/Support</h3>
+            <div class="value">${heavyVehicles}</div>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Recent Maintenance Actions</h2>
+            <button class="btn-link" onclick="app.setPage('vehicles')">Manage Fleet</button>
+        </div>
+        <div class="panel-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Vehicle</th>
+                        <th>Type</th>
+                        <th>Reg No</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${this.vehicles.slice(-5).reverse().map(v => `
+                    <tr>
+                        <td>${v.name}</td>
+                        <td>${v.type}</td>
+                        <td><span style="font-family:'Orbitron'; font-size:0.8rem;">${v.id}</span></td>
+                        <td><span class="status-badge ${this.isVehicleDue(v) ? 'active' : 'completed'}">
+                            ${this.isVehicleDue(v) ? 'Service Due' : 'Operational'}
+                        </span></td>
+                    </tr>
+                    `).join('')}
+                    ${this.vehicles.length === 0 ? `<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No vehicles registered</td></tr>` : ''}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Fleet Alerts</h2>
+        </div>
+        <div class="panel-body" style="padding:20px;">
+            ${serviceDue > 0 ? `
+                <div class="alert-item high">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="alert-content">
+                        <strong>Maintenance Overdue</strong>
+                        <p>${serviceDue} vehicles require immediate service attention.</p>
+                    </div>
+                </div>
+            ` : ''}
+            <div class="alert-item mid">
+                <i class="fas fa-info-circle"></i>
+                <div class="alert-content">
+                    <strong>System Update</strong>
+                    <p>Vehicle tracking database is synchronized with Firebase.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+            },
+
             handleTabSwitch(e) {
                 const target = e.currentTarget;
                 const tab = target.getAttribute('data-tab');
+                this.setPage(tab);
+            },
 
-                // Update active class
-                this.navItems.forEach(item => item.classList.remove('active'));
-                target.classList.add('active');
+            setPage(tab) {
+                // Update active class in sidebar
+                this.navItems.forEach(item => {
+                    if (item.getAttribute('data-tab') === tab) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
 
                 // Reset sub-filters when switching main tabs
                 document.querySelectorAll('.submenu li').forEach(li => li.classList.remove('active-sub'));
+
+                this.currentTab = tab; // Track current tab
 
                 switch (tab) {
                     case 'dashboard':
@@ -1250,6 +1442,19 @@
                         break;
                     default:
                         this.contentArea.innerHTML = `<div class="placeholder-view">View under construction: ${tab}</div>`;
+                }
+            },
+
+            handleGlobalSearch(query) {
+                if (this.currentTab === 'vehicles') {
+                    this.setVehicleSearch(query);
+                } else if (this.currentTab === 'person') {
+                    // Personnel doesn't have a dedicated search variable yet, let's filter personnel view
+                    this.personnelSearchQuery = query;
+                    this.renderPersonnel();
+                } else {
+                    // For other tabs, maybe just log or show a toast
+                    console.log("Global search is contextual. Switch to Vehicles or Personnel to search records.");
                 }
             },
 
@@ -2625,25 +2830,25 @@
                         <div class="form-group">
                             <label>GitHub Personal Access Token (PAT)</label>
                             <input type="password" id="gh-token" placeholder="ghp_..." value="${this.githubToken}"
-                                style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                                style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:12px 15px; width:100%; border-radius:12px;">
                                 <small style="color:#aaa; display:block; margin-top:5px;">Required scope: <code>repo</code></small>
                         </div>
                         <div class="form-group" style="margin-top:15px; display:flex; gap:10px;">
                             <div style="flex:1;">
                                 <label>GitHub Username</label>
                                 <input type="text" id="gh-owner" placeholder="username" value="${this.githubOwner}"
-                                    style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                                    style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:12px 15px; width:100%; border-radius:12px;">
                             </div>
                             <div style="flex:1;">
                                 <label>Repository Name</label>
                                 <input type="text" id="gh-repo" placeholder="repo-name" value="${this.githubRepo}"
-                                    style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                                    style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:12px 15px; width:100%; border-radius:12px;">
                             </div>
                         </div>
                         <div class="form-group" style="margin-top:15px;">
                             <label>File Path</label>
                             <input type="text" id="gh-path" placeholder="data/army_data.json" value="${this.githubPath}"
-                                style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                                style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:12px 15px; width:100%; border-radius:12px;">
                         </div>
                         <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
                             <button class="btn-primary" onclick="app.saveGithubSettings()"><i class="fas fa-save"></i> Save
@@ -3125,11 +3330,14 @@
 
                 // Filter Logic
                 const filteredPersonnel = this.personnel.filter(p => {
+                    const matchSearch = !this.personnelSearchQuery ||
+                        (p.name.toLowerCase().includes(this.personnelSearchQuery.toLowerCase()) ||
+                            p.id.toLowerCase().includes(this.personnelSearchQuery.toLowerCase()));
                     const matchCategory = this.currentPersonnelFilter === 'All' || p.category === this.currentPersonnelFilter;
                     const matchUnit = this.currentUnitFilter === 'All' || (p.unit || '9 SIG BN') === this.currentUnitFilter;
                     const matchRank = this.currentRankFilter === 'All' || p.rank === this.currentRankFilter;
                     const matchDuty = this.currentDutyFilter === 'All' || p.dutyList === this.currentDutyFilter;
-                    return matchCategory && matchUnit && matchRank && matchDuty;
+                    return matchSearch && matchCategory && matchUnit && matchRank && matchDuty;
                 });
 
                 let contentHtml = '';
