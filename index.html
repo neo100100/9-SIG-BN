@@ -1042,6 +1042,8 @@
             currentVehicleTypeFilter: 'All',
             personnelViewMode: 'list', // 'list' or 'grid'
             vehicleViewMode: 'grid', // 'grid' or 'list'
+            currentVehicleCompanyFilter: 'All',
+            vehicleSearchQuery: '',
 
             // GitHub Config (Backup)
             githubToken: localStorage.getItem('github_token') || '',
@@ -1712,11 +1714,14 @@
 
             // Vehicle Management System (Garir Hisab)
             renderVehicles() {
-                // Filter vehicles based on selected category and type
+                // Filter vehicles based on search, category, type, and company
                 const filteredVehicles = this.vehicles.filter(v => {
+                    const matchSearch = !this.vehicleSearchQuery ||
+                        v.name.toLowerCase().includes(this.vehicleSearchQuery.toLowerCase());
                     const matchCategory = this.currentVehicleCategoryFilter === 'All' || v.category === this.currentVehicleCategoryFilter;
                     const matchType = this.currentVehicleTypeFilter === 'All' || v.type === this.currentVehicleTypeFilter;
-                    return matchCategory && matchType;
+                    const matchCompany = this.currentVehicleCompanyFilter === 'All' || v.company === this.currentVehicleCompanyFilter;
+                    return matchSearch && matchCategory && matchType && matchCompany;
                 });
 
                 this.contentArea.innerHTML = `
@@ -1725,57 +1730,83 @@
                     <h1>Vehicle Management</h1>
                     <p>Track maintenance schedules, oil changes, and fitness dates.</p>
                 </div>
-                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <div style="display:flex; gap:15px; align-items:center; flex-wrap:wrap;">
                     <div class="view-toggles" style="display:flex; gap:5px; background:rgba(255,255,255,0.05); padding:4px; border-radius:8px; border: 1px solid var(--border-color);">
                         <button class="view-mode-btn ${this.vehicleViewMode === 'list' ? 'active' : ''}" 
                             onclick="app.setVehicleViewMode('list')" title="List View"><i class="fas fa-list"></i></button>
                         <button class="view-mode-btn ${this.vehicleViewMode === 'grid' ? 'active' : ''}" 
                             onclick="app.setVehicleViewMode('grid')" title="Grid View"><i class="fas fa-th-large"></i></button>
                     </div>
-                     <select onchange="app.setRegistryFilter('currentVehicleCategoryFilter', this.value);" 
-                        style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:180px;">
-                        <option value="All" ${this.currentVehicleCategoryFilter === 'All' ? 'selected' : ''}>All Categories</option>
-                        ${Object.keys(this.vehicleCategories).map(cat => `<option value="${cat}" ${this.currentVehicleCategoryFilter === cat ? 'selected' : ''}>${cat}</option>`).join('')}
-                    </select>
                     <button class="btn-primary" onclick="app.showAddVehicleModal()"><i class="fas fa-plus"></i> Add Vehicle</button>
                 </div>
             </div>
 
+            <div class="filter-bar" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; background:rgba(255,255,255,0.02); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+                <div class="filter-item">
+                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px; text-transform:uppercase;">Search Reg No</label>
+                    <div class="search-box" style="position:relative;">
+                        <i class="fas fa-search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-secondary); font-size:0.8rem;"></i>
+                        <input type="text" placeholder="e.g. Jeep-123" value="${this.vehicleSearchQuery}" 
+                            oninput="app.setVehicleSearch(this.value)"
+                            style="padding: 8px 12px 8px 35px; background:var(--secondary-bg); border:1px solid #444; border-radius:4px; color:#fff; font-size:0.8rem; width:180px;">
+                    </div>
+                </div>
+                <div class="filter-item">
+                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px; text-transform:uppercase;">Company/Unit</label>
+                    <select onchange="app.setRegistryFilter('currentVehicleCompanyFilter', this.value);" 
+                        style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:150px;">
+                        <option value="All" ${this.currentVehicleCompanyFilter === 'All' ? 'selected' : ''}>All Companies</option>
+                        ${this.sections.map(c => `<option value="${c}" ${this.currentVehicleCompanyFilter === c ? 'selected' : ''}>${c}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px; text-transform:uppercase;">Category</label>
+                    <select onchange="app.setRegistryFilter('currentVehicleCategoryFilter', this.value);" 
+                        style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:150px;">
+                        <option value="All" ${this.currentVehicleCategoryFilter === 'All' ? 'selected' : ''}>All Categories</option>
+                        ${Object.keys(this.vehicleCategories).map(cat => `<option value="${cat}" ${this.currentVehicleCategoryFilter === cat ? 'selected' : ''}>${cat}</option>`).join('')}
+                    </select>
+                </div>
+            </div>
+
             <div class="stats-grid" style="margin-bottom: 25px;">
-                <div class="stat-card ${this.currentVehicleCategoryFilter === 'All' ? 'active-filter' : ''}" onclick="app.setRegistryFilter('currentVehicleCategoryFilter', 'All');" style="cursor:pointer;">
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'All' && this.currentVehicleCategoryFilter === 'All' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('All'); app.setRegistryFilter('currentVehicleCategoryFilter', 'All');" style="cursor:pointer;">
                     <div class="stat-icon"><i class="fas fa-truck"></i></div>
                     <div class="stat-info">
                         <h3>Total Vehicles</h3>
                         <div class="value">${this.vehicles.length}</div>
                     </div>
                 </div>
-                <div class="stat-card ${this.currentVehicleCategoryFilter === 'Light Vehicle' ? 'active-filter' : ''}" onclick="app.setRegistryFilter('currentVehicleCategoryFilter', 'Light Vehicle');" style="cursor:pointer;">
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Jeep' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Jeep'); app.setRegistryFilter('currentVehicleCategoryFilter', 'All');" style="cursor:pointer;">
                     <div class="stat-icon" style="color:#1abc9c; background:rgba(26,188,156,0.1);"><i class="fas fa-car-side"></i></div>
                     <div class="stat-info">
-                        <h3>Light Vehicles</h3>
-                        <div class="value">${this.vehicles.filter(v => v.category === 'Light Vehicle').length}</div>
+                        <h3>Jeep</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Jeep').length}</div>
                     </div>
                 </div>
-                <div class="stat-card ${this.currentVehicleCategoryFilter === 'Heavy Vehicle' ? 'active-filter' : ''}" onclick="app.setRegistryFilter('currentVehicleCategoryFilter', 'Heavy Vehicle');" style="cursor:pointer;">
-                    <div class="stat-icon" style="color:#e67e22; background:rgba(230,126,34,0.1);"><i class="fas fa-truck-moving"></i></div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Pickup' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Pickup'); app.setRegistryFilter('currentVehicleCategoryFilter', 'All');" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#e67e22; background:rgba(230,126,34,0.1);"><i class="fas fa-truck-pickup"></i></div>
                     <div class="stat-info">
-                        <h3>Heavy Vehicles</h3>
-                        <div class="value">${this.vehicles.filter(v => v.category === 'Heavy Vehicle').length}</div>
+                        <h3>Pickup</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Pickup').length}</div>
                     </div>
                 </div>
-                <div class="stat-card ${this.currentVehicleCategoryFilter === 'Motorcycle' ? 'active-filter' : ''}" onclick="app.setRegistryFilter('currentVehicleCategoryFilter', 'Motorcycle');" style="cursor:pointer;">
+                <div class="stat-card ${this.currentVehicleTypeFilter === '3-Ton' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('3-Ton'); app.setRegistryFilter('currentVehicleCategoryFilter', 'All');" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#3498db; background:rgba(52,152,219,0.1);"><i class="fas fa-truck-moving"></i></div>
+                    <div class="stat-info">
+                        <h3>3-Ton</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === '3-Ton').length}</div>
+                    </div>
+                </div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Motorcycle' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Motorcycle'); app.setRegistryFilter('currentVehicleCategoryFilter', 'All');" style="cursor:pointer;">
                     <div class="stat-icon" style="color:#9b59b6; background:rgba(155,89,182,0.1);"><i class="fas fa-motorcycle"></i></div>
                     <div class="stat-info">
-                        <h3>Motorcycles</h3>
-                        <div class="value">${this.vehicles.filter(v => v.category === 'Motorcycle').length}</div>
+                        <h3>Motorcycle</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Motorcycle').length}</div>
                     </div>
                 </div>
             </div>
-
-            <div class="filter-bar" style="display:flex; gap:10px; margin-bottom:20px; overflow-x:auto; padding-bottom:5px;">
-                <button class="status-badge ${this.currentVehicleTypeFilter === 'All' ? 'active' : ''}" onclick="app.setVehicleTypeFilter('All')">All Types</button>
-                ${this.vehicleTypes.map(t => `<button class="status-badge ${this.currentVehicleTypeFilter === t ? 'active' : ''}" onclick="app.setVehicleTypeFilter('${t}')">${t}</button>`).join('')}
-            </div>
+            
             
             ${this.vehicleViewMode === 'grid' ? `
             <div class="vehicle-grid">
@@ -1835,6 +1866,11 @@
 
             setVehicleViewMode(mode) {
                 this.vehicleViewMode = mode;
+                this.renderVehicles();
+            },
+
+            setVehicleSearch(query) {
+                this.vehicleSearchQuery = query;
                 this.renderVehicles();
             },
 
@@ -2013,14 +2049,8 @@
                         <div class="form-group" style="margin-bottom:0;">
                             <label>Company/Unit</label>
                             <select id="v-company">
-                                <option value="BHQ COY">BHQ COY</option>
-                                <option value="HQ COY">HQ COY</option>
-                                <option value="RDO COY">RDO COY</option>
-                                <option value="RR COY">RR COY</option>
-                                <option value="OP COY">OP COY</option>
-                                <option value="108 COY">108 COY</option>
-                                <option value="109 COY">109 COY</option>
-                                <option value="209">209</option>
+                                <option value="">Select Company</option>
+                                ${this.sections.map(c => `<option value="${c}">${c}</option>`).join('')}
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom:0;">
@@ -2091,6 +2121,13 @@
                                 <option value="24">2 Years</option>
                             </select>
                             <input type="date" id="v-date-bat" style="padding:8px; font-size:0.85rem;">
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Anti-Corrosion</label>
+                            <select id="v-dur-anti" onchange="app.setMaintenanceDate('v-dur-anti', 'v-date-anti')" style="padding:8px; margin-bottom:5px; font-size:0.85rem;">
+                                <option value="">Set Duration...</option>
+                                <option value="12">1 Year</option>
+                            </select>
+                            <input type="date" id="v-date-anti" style="padding:8px; font-size:0.85rem;">
                         </div>
                     </div>
                 </div>
@@ -2171,14 +2208,8 @@
                         <div class="form-group" style="margin-bottom:0;">
                             <label>Company/Unit</label>
                             <select id="edit-v-company">
-                                <option value="BHQ COY" ${v.company === 'BHQ COY' ? 'selected' : ''}>BHQ COY</option>
-                                <option value="HQ COY" ${v.company === 'HQ COY' ? 'selected' : ''}>HQ COY</option>
-                                <option value="RDO COY" ${v.company === 'RDO COY' ? 'selected' : ''}>RDO COY</option>
-                                <option value="RR COY" ${v.company === 'RR COY' ? 'selected' : ''}>RR COY</option>
-                                <option value="OP COY" ${v.company === 'OP COY' ? 'selected' : ''}>OP COY</option>
-                                <option value="108 COY" ${v.company === '108 COY' ? 'selected' : ''}>108 COY</option>
-                                <option value="109 COY" ${v.company === '109 COY' ? 'selected' : ''}>109 COY</option>
-                                <option value="209" ${v.company === '209' ? 'selected' : ''}>209</option>
+                                <option value="">Select Company</option>
+                                ${this.sections.map(c => `<option value="${c}" ${v.company === c ? 'selected' : ''}>${c}</option>`).join('')}
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom:0;">
@@ -2221,6 +2252,30 @@
                             <label style="font-size:0.8rem;">Fuel Filter</label>
                             <input type="date" id="edit-v-date-fuelfilt" value="${v.dates?.fuelFilter || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
                             <select id="edit-v-dur-fuelfilt" onchange="app.setMaintenanceDate('edit-v-dur-fuelfilt', 'edit-v-date-fuelfilt')" style="padding:8px; font-size:0.8rem;">
+                                <option value="">Reset Duration...</option>
+                                <option value="12">+1 Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Air Filter</label>
+                            <input type="date" id="edit-v-date-airfilt" value="${v.dates?.airFilter || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
+                            <select id="edit-v-dur-airfilt" onchange="app.setMaintenanceDate('edit-v-dur-airfilt', 'edit-v-date-airfilt')" style="padding:8px; font-size:0.8rem;">
+                                <option value="">Reset Duration...</option>
+                                <option value="12">+1 Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Battery</label>
+                            <input type="date" id="edit-v-date-bat" value="${v.dates?.battery || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
+                            <select id="edit-v-dur-bat" onchange="app.setMaintenanceDate('edit-v-dur-bat', 'edit-v-date-bat')" style="padding:8px; font-size:0.8rem;">
+                                <option value="">Reset Duration...</option>
+                                <option value="24">+2 Years</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label style="font-size:0.8rem;">Anti-Corrosion</label>
+                            <input type="date" id="edit-v-date-anti" value="${v.dates?.antiCorrosion || ''}" style="padding:8px; font-size:0.85rem; margin-bottom:5px;">
+                            <select id="edit-v-dur-anti" onchange="app.setMaintenanceDate('edit-v-dur-anti', 'edit-v-date-anti')" style="padding:8px; font-size:0.8rem;">
                                 <option value="">Reset Duration...</option>
                                 <option value="12">+1 Year</option>
                             </select>
@@ -2775,7 +2830,7 @@
                 this[key] = value;
                 if (key === 'currentDutyCategory') {
                     this.renderDutyPosts();
-                } else if (key === 'currentVehicleCategoryFilter') {
+                } else if (key.toLowerCase().includes('vehicle')) {
                     this.renderVehicles();
                 } else {
                     this.renderPersonnel();
@@ -2825,11 +2880,30 @@
         </div>
     </div>
     <div class="stat-card leave">
-        <div class="stat-icon"><i class="fas fa-umbrella-beach"></i></div>
+        <div class="stat-icon"><i class="fas fa-truck-pickup"></i></div>
         <div class="stat-info">
-            <h3>On Leave</h3>
-            <div class="value">0</div>
+            <h3>Vehicles</h3>
+            <div class="value">${this.vehicles.length}</div>
         </div>
+    </div>
+</div>
+
+<div class="stats-grid" style="margin-top: -15px; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+    <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:8px; text-align:center; border:1px solid rgba(255,255,255,0.05);">
+        <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Jeep</div>
+        <div style="font-size:1.2rem; font-weight:bold; color:var(--accent-color);">${this.vehicles.filter(v => v.type === 'Jeep').length}</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:8px; text-align:center; border:1px solid rgba(255,255,255,0.05);">
+        <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Pickup</div>
+        <div style="font-size:1.2rem; font-weight:bold; color:var(--accent-color);">${this.vehicles.filter(v => v.type === 'Pickup').length}</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:8px; text-align:center; border:1px solid rgba(255,255,255,0.05);">
+        <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">3-Ton</div>
+        <div style="font-size:1.2rem; font-weight:bold; color:var(--accent-color);">${this.vehicles.filter(v => v.type === '3-Ton').length}</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:8px; text-align:center; border:1px solid rgba(255,255,255,0.05);">
+        <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Motorcycle</div>
+        <div style="font-size:1.2rem; font-weight:bold; color:var(--accent-color);">${this.vehicles.filter(v => v.type === 'Motorcycle').length}</div>
     </div>
 </div>
 
