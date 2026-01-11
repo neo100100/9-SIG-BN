@@ -1033,6 +1033,7 @@
             currentRankFilter: 'All',
             currentDutyFilter: 'All',
             currentDutyCategory: 'All',
+            currentVehicleTypeFilter: 'All',
             personnelViewMode: 'list', // 'list' or 'grid'
 
             // GitHub Config (Backup)
@@ -1660,27 +1661,91 @@
 
             // Vehicle Management System (Garir Hisab)
             renderVehicles() {
+                // Filter vehicles based on selected type
+                const filteredVehicles = this.currentVehicleTypeFilter === 'All'
+                    ? this.vehicles
+                    : this.vehicles.filter(v => v.type === this.currentVehicleTypeFilter);
+
                 this.contentArea.innerHTML = `
             <div class="dashboard-header" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <h1>Garir Hisab (Vehicle Management)</h1>
-                    <p>Track maintenance schedules, oil changes, and fitness dates.</p>
+                    <h1>Vehicle Management</h1>
+                    <p>Track maintenance schedules, oil changes, and fitness dates.${this.currentVehicleTypeFilter !== 'All' ? ` <span style="color:var(--accent-color);">(Showing: ${this.currentVehicleTypeFilter})</span>` : ''}</p>
                 </div>
                 <button class="btn-primary" onclick="app.showAddVehicleModal()"><i class="fas fa-plus"></i> Add Vehicle</button>
             </div>
+
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'All' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('All')" style="cursor:pointer;">
+                    <div class="stat-icon"><i class="fas fa-truck"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Vehicles</h3>
+                        <div class="value">${this.vehicles.length}</div>
+                    </div>
+                </div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Jeep' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Jeep')" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#3498db; background:rgba(52,152,219,0.1);"><i class="fas fa-car-side"></i></div>
+                    <div class="stat-info">
+                        <h3>Jeep</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Jeep').length}</div>
+                    </div>
+                </div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Pickup' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Pickup')" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#27ae60; background:rgba(39,174,96,0.1);"><i class="fas fa-truck-pickup"></i></div>
+                    <div class="stat-info">
+                        <h3>Pickup</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Pickup').length}</div>
+                    </div>
+                </div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === '3-Ton' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('3-Ton')" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#e67e22; background:rgba(230,126,34,0.1);"><i class="fas fa-truck-moving"></i></div>
+                    <div class="stat-info">
+                        <h3>3-Ton</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === '3-Ton').length}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-bottom: 25px; grid-template-columns: repeat(3, 1fr);">
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Motorcycle' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Motorcycle')" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#9b59b6; background:rgba(155,89,182,0.1);"><i class="fas fa-motorcycle"></i></div>
+                    <div class="stat-info">
+                        <h3>Motorcycle</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Motorcycle').length}</div>
+                    </div>
+                </div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Hiace' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Hiace')" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#1abc9c; background:rgba(26,188,156,0.1);"><i class="fas fa-shuttle-van"></i></div>
+                    <div class="stat-info">
+                        <h3>Hiace</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Hiace').length}</div>
+                    </div>
+                </div>
+                <div class="stat-card ${this.currentVehicleTypeFilter === 'Coaster Bus' ? 'active-filter' : ''}" onclick="app.setVehicleTypeFilter('Coaster Bus')" style="cursor:pointer;">
+                    <div class="stat-icon" style="color:#e74c3c; background:rgba(231,76,60,0.1);"><i class="fas fa-bus"></i></div>
+                    <div class="stat-info">
+                        <h3>Coaster Bus</h3>
+                        <div class="value">${this.vehicles.filter(v => v.type === 'Coaster Bus').length}</div>
+                    </div>
+                </div>
+            </div>
             
             <div class="vehicle-grid">
-                ${this.vehicles.length > 0 ? this.vehicles.map(v => this.createVehicleCard(v)).join('') :
-                        '<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-secondary);">No vehicles registered. Add a vehicle to start tracking.</div>'}
+                ${filteredVehicles.length > 0 ? filteredVehicles.map(v => this.createVehicleCard(v)).join('') :
+                        '<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-secondary);">No vehicles found for this type.</div>'}
             </div>
         `;
             },
 
+            setVehicleTypeFilter(type) {
+                this.currentVehicleTypeFilter = type;
+                this.renderVehicles();
+            },
+
             createVehicleCard(v) {
-                // Calculate Alerts
-                const kmAlerts = this.checkKmAlerts(v);
+                // Calculate Alerts - all items are now date-based
                 const dateAlerts = this.checkDateAlerts(v);
-                const hasRedAlert = kmAlerts.some(a => a.isRed) || dateAlerts.some(a => a.isRed);
+                const hasRedAlert = dateAlerts.some(a => a.isRed);
 
                 return `
             <div class="vehicle-card ${hasRedAlert ? 'alert-pulse' : ''}" style="${hasRedAlert ? 'border-color:#e74c3c;' : ''}">
@@ -1692,17 +1757,18 @@
                         <div class="vehicle-info">
                             <h3>${v.name}</h3>
                             <div class="vehicle-type">${v.type}</div>
+                            <div style="font-size:0.75rem; color:var(--accent-color); margin-top:2px;">${v.company || 'No Company'}</div>
                         </div>
                     </div>
                     <div class="km-badge">Current: ${v.currentKm} KM</div>
                 </div>
 
                 <div class="maintenance-list">
-                    ${this.renderMaintenanceItem('Engine Oil', v.currentKm, v.limits.engineOil, 'KM')}
-                    ${this.renderMaintenanceItem('Transmission Oil', v.currentKm, v.limits.transmissionOil, 'KM')}
-                    ${this.renderMaintenanceItem('Oil Filter', v.currentKm, v.limits.oilFilter, 'KM')}
-                    ${this.renderMaintenanceItem('Fuel Filter', v.currentKm, v.limits.fuelFilter, 'KM')}
-                    ${this.renderMaintenanceItem('Air Filter', v.currentKm, v.limits.airFilter, 'KM')}
+                    ${this.renderDateItem('Engine Oil', v.dates.engineOil)}
+                    ${this.renderDateItem('Transmission Oil', v.dates.transmissionOil)}
+                    ${this.renderDateItem('Oil Filter', v.dates.oilFilter)}
+                    ${this.renderDateItem('Fuel Filter', v.dates.fuelFilter)}
+                    ${this.renderDateItem('Air Filter', v.dates.airFilter)}
                     ${this.renderDateItem('Battery Change', v.dates.battery)}
                     ${this.renderDateItem('Anti-Corrosion', v.dates.antiCorrosion)}
                 </div>
@@ -1790,8 +1856,16 @@
                         if (diffDays <= 15) alerts.push({ name, isRed: true });
                     }
                 };
-                check(v.dates.battery, 'Battery');
-                check(v.dates.antiCorrosion, 'Anti-Corrosion');
+                // Check all maintenance dates
+                if (v.dates) {
+                    check(v.dates.engineOil, 'Engine Oil');
+                    check(v.dates.transmissionOil, 'Transmission Oil');
+                    check(v.dates.oilFilter, 'Oil Filter');
+                    check(v.dates.fuelFilter, 'Fuel Filter');
+                    check(v.dates.airFilter, 'Air Filter');
+                    check(v.dates.battery, 'Battery');
+                    check(v.dates.antiCorrosion, 'Anti-Corrosion');
+                }
                 return alerts;
             },
 
@@ -1812,45 +1886,94 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label>Company/Unit</label>
+                    <select id="v-company">
+                        <option value="BHQ COY">BHQ COY</option>
+                        <option value="HQ COY">HQ COY</option>
+                        <option value="RDO COY">RDO COY</option>
+                        <option value="RR COY">RR COY</option>
+                        <option value="OP COY">OP COY</option>
+                        <option value="108 COY">108 COY</option>
+                        <option value="109 COY">109 COY</option>
+                        <option value="209">209</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Current KM Reading</label>
                     <input type="number" id="v-km" placeholder="e.g. 50000">
                 </div>
                 
-                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Maintenance Limits (Next Change at KM)</h4>
+                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Maintenance Schedule (Select Duration from Today)</h4>
                 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div class="form-group">
-                        <label>Engine Oil Limit</label>
-                        <input type="number" id="v-lim-eng" placeholder="KM">
+                        <label>Engine Oil Change</label>
+                        <select id="v-dur-eng" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="3">3 Months</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Transmission Oil Limit</label>
-                        <input type="number" id="v-lim-trans" placeholder="KM">
+                        <label>Transmission Oil Change</label>
+                        <select id="v-dur-trans" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="3">3 Months</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Oil Filter Limit</label>
-                        <input type="number" id="v-lim-oilfilt" placeholder="KM">
+                        <label>Oil Filter Change</label>
+                        <select id="v-dur-oilfilt" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="3">3 Months</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Fuel Filter Limit</label>
-                        <input type="number" id="v-lim-fuelfilt" placeholder="KM">
+                        <label>Fuel Filter Change</label>
+                        <select id="v-dur-fuelfilt" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="3">3 Months</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
-                     <div class="form-group">
-                        <label>Air Filter Limit</label>
-                        <input type="number" id="v-lim-airfilt" placeholder="KM">
+                    <div class="form-group">
+                        <label>Air Filter Change</label>
+                        <select id="v-dur-airfilt" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="3">3 Months</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
-                </div>
-
-                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Expiry Dates</h4>
-
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div class="form-group">
                         <label>Battery Expiry</label>
-                        <input type="date" id="v-date-bat">
+                        <select id="v-dur-bat" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="18">1.5 Years</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Anti-Corrosion Date</label>
-                        <input type="date" id="v-date-anti">
+                        <label>Anti-Corrosion</label>
+                        <select id="v-dur-anti" style="width:100%;">
+                            <option value="">Not Set</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">1 Year</option>
+                            <option value="24">2 Years</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1866,25 +1989,33 @@
             addVehicle() {
                 const name = document.getElementById('v-name').value;
                 const type = document.getElementById('v-type').value;
+                const company = document.getElementById('v-company').value;
                 const currentKm = parseInt(document.getElementById('v-km').value) || 0;
 
                 if (!name) { alert('Vehicle Name is required'); return; }
+
+                // Helper to calculate date from months
+                const calcDate = (months) => {
+                    if (!months) return '';
+                    const date = new Date();
+                    date.setMonth(date.getMonth() + parseInt(months));
+                    return date.toISOString().split('T')[0];
+                };
 
                 const newVehicle = {
                     id: 'VEH-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                     name,
                     type,
+                    company,
                     currentKm,
-                    limits: {
-                        engineOil: parseInt(document.getElementById('v-lim-eng').value) || 0,
-                        transmissionOil: parseInt(document.getElementById('v-lim-trans').value) || 0,
-                        oilFilter: parseInt(document.getElementById('v-lim-oilfilt').value) || 0,
-                        fuelFilter: parseInt(document.getElementById('v-lim-fuelfilt').value) || 0,
-                        airFilter: parseInt(document.getElementById('v-lim-airfilt').value) || 0,
-                    },
                     dates: {
-                        battery: document.getElementById('v-date-bat').value,
-                        antiCorrosion: document.getElementById('v-date-anti').value
+                        engineOil: calcDate(document.getElementById('v-dur-eng').value),
+                        transmissionOil: calcDate(document.getElementById('v-dur-trans').value),
+                        oilFilter: calcDate(document.getElementById('v-dur-oilfilt').value),
+                        fuelFilter: calcDate(document.getElementById('v-dur-fuelfilt').value),
+                        airFilter: calcDate(document.getElementById('v-dur-airfilt').value),
+                        battery: calcDate(document.getElementById('v-dur-bat').value),
+                        antiCorrosion: calcDate(document.getElementById('v-dur-anti').value)
                     }
                 };
 
@@ -1908,41 +2039,77 @@
                     <input type="number" id="edit-v-km" value="${v.currentKm}">
                 </div>
                 
-                 <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Update Maintenance Limits</h4>
+                 <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Update Maintenance (Select New Duration or Keep Current)</h4>
                 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div class="form-group">
-                        <label>Engine Oil Limit</label>
-                        <input type="number" id="edit-v-lim-eng" value="${v.limits.engineOil || ''}">
+                        <label>Engine Oil <small style="color:var(--text-secondary);">(${v.dates?.engineOil || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-eng" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="3">Reset +3 Months</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Transmission Oil Limit</label>
-                        <input type="number" id="edit-v-lim-trans" value="${v.limits.transmissionOil || ''}">
+                        <label>Transmission Oil <small style="color:var(--text-secondary);">(${v.dates?.transmissionOil || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-trans" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="3">Reset +3 Months</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Oil Filter Limit</label>
-                        <input type="number" id="edit-v-lim-oilfilt" value="${v.limits.oilFilter || ''}">
+                        <label>Oil Filter <small style="color:var(--text-secondary);">(${v.dates?.oilFilter || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-oilfilt" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="3">Reset +3 Months</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Fuel Filter Limit</label>
-                        <input type="number" id="edit-v-lim-fuelfilt" value="${v.limits.fuelFilter || ''}">
-                    </div>
-                     <div class="form-group">
-                        <label>Air Filter Limit</label>
-                        <input type="number" id="edit-v-lim-airfilt" value="${v.limits.airFilter || ''}">
-                    </div>
-                </div>
-
-                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Update Dates</h4>
-
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                    <div class="form-group">
-                        <label>Battery Expiry</label>
-                        <input type="date" id="edit-v-date-bat" value="${v.dates.battery || ''}">
+                        <label>Fuel Filter <small style="color:var(--text-secondary);">(${v.dates?.fuelFilter || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-fuelfilt" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="3">Reset +3 Months</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Anti-Corrosion Date</label>
-                        <input type="date" id="edit-v-date-anti" value="${v.dates.antiCorrosion || ''}">
+                        <label>Air Filter <small style="color:var(--text-secondary);">(${v.dates?.airFilter || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-airfilt" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="3">Reset +3 Months</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Battery <small style="color:var(--text-secondary);">(${v.dates?.battery || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-bat" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="18">Reset +1.5 Years</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Anti-Corrosion <small style="color:var(--text-secondary);">(${v.dates?.antiCorrosion || 'Not Set'})</small></label>
+                        <select id="edit-v-dur-anti" style="width:100%;">
+                            <option value="">Keep Current</option>
+                            <option value="6">Reset +6 Months</option>
+                            <option value="12">Reset +1 Year</option>
+                            <option value="24">Reset +2 Years</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1959,14 +2126,34 @@
                 const v = this.vehicles.find(v => v.id === id);
                 if (v) {
                     v.currentKm = parseInt(document.getElementById('edit-v-km').value) || 0;
-                    v.limits.engineOil = parseInt(document.getElementById('edit-v-lim-eng').value) || 0;
-                    v.limits.transmissionOil = parseInt(document.getElementById('edit-v-lim-trans').value) || 0;
-                    v.limits.oilFilter = parseInt(document.getElementById('edit-v-lim-oilfilt').value) || 0;
-                    v.limits.fuelFilter = parseInt(document.getElementById('edit-v-lim-fuelfilt').value) || 0;
-                    v.limits.airFilter = parseInt(document.getElementById('edit-v-lim-airfilt').value) || 0;
 
-                    v.dates.battery = document.getElementById('edit-v-date-bat').value;
-                    v.dates.antiCorrosion = document.getElementById('edit-v-date-anti').value;
+                    // Ensure dates object exists
+                    if (!v.dates) v.dates = {};
+
+                    // Helper to calculate date from months
+                    const calcDate = (months) => {
+                        if (!months) return null; // Return null to keep current
+                        const date = new Date();
+                        date.setMonth(date.getMonth() + parseInt(months));
+                        return date.toISOString().split('T')[0];
+                    };
+
+                    // Only update if user selected a new duration (not "Keep Current")
+                    const engDur = document.getElementById('edit-v-dur-eng').value;
+                    const transDur = document.getElementById('edit-v-dur-trans').value;
+                    const oilFiltDur = document.getElementById('edit-v-dur-oilfilt').value;
+                    const fuelFiltDur = document.getElementById('edit-v-dur-fuelfilt').value;
+                    const airFiltDur = document.getElementById('edit-v-dur-airfilt').value;
+                    const batDur = document.getElementById('edit-v-dur-bat').value;
+                    const antiDur = document.getElementById('edit-v-dur-anti').value;
+
+                    if (engDur) v.dates.engineOil = calcDate(engDur);
+                    if (transDur) v.dates.transmissionOil = calcDate(transDur);
+                    if (oilFiltDur) v.dates.oilFilter = calcDate(oilFiltDur);
+                    if (fuelFiltDur) v.dates.fuelFilter = calcDate(fuelFiltDur);
+                    if (airFiltDur) v.dates.airFilter = calcDate(airFiltDur);
+                    if (batDur) v.dates.battery = calcDate(batDur);
+                    if (antiDur) v.dates.antiCorrosion = calcDate(antiDur);
 
                     this.saveData();
                     this.renderVehicles();
