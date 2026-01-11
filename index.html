@@ -148,6 +148,24 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+        .alert-pulse {
+            animation: alertPulse 2s infinite;
+        }
+
+        @keyframes alertPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+            }
+        }
+
         .search-bar {
             position: relative;
             width: 400px;
@@ -685,6 +703,230 @@
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.05);
         }
+
+        .personnel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .personnel-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .personnel-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .personnel-card .card-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .personnel-card .card-rank {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .personnel-card .card-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .personnel-card .card-info {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .personnel-card .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .personnel-card .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .personnel-card .info-label {
+            color: var(--text-secondary);
+        }
+
+        .personnel-card .card-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .view-mode-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-mode-btn.active {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        /* Vehicle Management Styles */
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .vehicle-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vehicle-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .vehicle-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .vehicle-type {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .maintenance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .maintenance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .maintenance-item.alert {
+            background: rgba(231, 76, 60, 0.15);
+            border-left: 3px solid #e74c3c;
+            color: #ffadad;
+        }
+
+        .maintenance-item.warning {
+            border-left: 3px solid #f1c40f;
+        }
+
+        .maintenance-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .maintenance-status {
+            font-weight: 600;
+        }
+
+        .vehicle-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        .km-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: monospace;
+            margin-left: auto;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -717,6 +959,10 @@
                     <li data-tab="posts">
                         <i class="fas fa-map-marker-alt"></i>
                         <span>Duty List</span>
+                    </li>
+                    <li data-tab="vehicles">
+                        <i class="fas fa-truck-pickup"></i>
+                        <span>Vehicle Management</span>
                     </li>
                     <li data-tab="reports">
                         <i class="fas fa-file-contract"></i>
@@ -775,6 +1021,8 @@
             posts: [],
             assignments: [],
             personnel: [],
+            vehicles: [],
+            vehicleTypes: ["Jeep", "Pickup", "3-Ton", "Motorcycle", "Hiace", "Coaster Bus"],
             professions: ["Technician", "Operator", "Driver Signal", "Clerk", "SMT Clerk"],
             sections: ["BHQ COY", "HQ COY", "RDO COY", "RR COY", "OP COY", "108 COY", "109 COY", "RP", "MT"],
             unitsData: { "9 SIG BN": [], "Army Camp": ["Narsindi Camp", "Sippur Camp"] },
@@ -785,6 +1033,7 @@
             currentRankFilter: 'All',
             currentDutyFilter: 'All',
             currentDutyCategory: 'All',
+            personnelViewMode: 'list', // 'list' or 'grid'
 
             // GitHub Config (Backup)
             githubToken: localStorage.getItem('github_token') || '',
@@ -825,6 +1074,14 @@
                         const personId = e.target.closest('.delete-person').dataset.id;
                         this.deleteSoldier(personId);
                     }
+                    if (e.target.closest('.edit-person')) {
+                        const personId = e.target.closest('.edit-person').dataset.id;
+                        this.showEditSoldierModal(personId);
+                    }
+                    if (e.target.closest('.view-person')) {
+                        const personId = e.target.closest('.view-person').dataset.id;
+                        this.showViewSoldierModal(personId);
+                    }
                 });
             },
 
@@ -845,6 +1102,7 @@
                         this.posts = this.safeArray(data.posts);
                         this.assignments = this.safeArray(data.assignments);
                         this.personnel = this.safeArray(data.personnel);
+                        this.vehicles = this.safeArray(data.vehicles);
 
                         // Use defaults if empty or invalid
                         this.professions = this.safeArray(data.professions);
@@ -857,6 +1115,10 @@
                         // Fix: If unitsData is empty or not an object, restore defaults
                         if (!this.unitsData || typeof this.unitsData !== 'object' || Object.keys(this.unitsData).length === 0) {
                             this.unitsData = { "9 SIG BN": [], "Army Camp": ["Narsindi Camp", "Sippur Camp"] };
+                        }
+                        // Ensure 9 SIG BN always exists
+                        if (!this.unitsData["9 SIG BN"]) {
+                            this.unitsData["9 SIG BN"] = [];
                         }
                     } else {
                         // Initialize if DB is empty
@@ -879,6 +1141,7 @@
                     posts: this.posts,
                     assignments: this.assignments,
                     personnel: this.personnel,
+                    vehicles: this.vehicles,
                     professions: this.professions,
                     sections: this.sections,
                     unitsData: this.unitsData
@@ -926,6 +1189,9 @@
                         break;
                     case 'settings':
                         this.renderSettings();
+                        break;
+                    case 'vehicles':
+                        this.renderVehicles();
                         break;
                     default:
                         this.contentArea.innerHTML = `<div class="placeholder-view">View under construction: ${tab}</div>`;
@@ -1183,7 +1449,7 @@
                     <label>Unit</label>
                     <select id="sol-unit" onchange="app.updateUnitSubOptions()">
                         <option value="">Select Unit</option>
-                        ${Object.keys(this.unitsData).map(unit => `<option value="${unit}">${unit}</option>`).join('')}
+                        ${[...new Set(["9 SIG BN", ...Object.keys(this.unitsData)])].map(unit => `<option value="${unit}">${unit}</option>`).join('')}
                     </select>
                 </div>
                 <div id="camp-location-group" class="form-group" style="display:none;">
@@ -1244,24 +1510,7 @@
                 }
             },
 
-            async sendDiscordWebhook(embed) {
-                const webhookUrl = "https://discord.com/api/webhooks/1410864020033900604/oNkRlrf6Ft50IT1KHAZLdlhHxozebEGMnDpq_AysxZNT5tdaOcWXRsd7oQ_xKFUtiUaS";
-                const payload = {
-                    username: "9 SIG BN Tactical System",
-                    avatar_url: "https://ui-avatars.com/api/?name=9+SIG&background=d4af37&color=000",
-                    embeds: [embed]
-                };
 
-                try {
-                    await fetch(webhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                } catch (error) {
-                    console.error("Failed to send webhook:", error);
-                }
-            },
 
             async addSoldier() {
                 const name = document.getElementById('sol-name').value;
@@ -1294,21 +1543,7 @@
                     this.renderPersonnel();
                     document.querySelector('.modal-overlay').remove();
 
-                    // Send Discord Notification
-                    this.sendDiscordWebhook({
-                        title: "🆕 New Soldier Registered",
-                        color: 0x00FF99, // Green
-                        fields: [
-                            { name: "Soldier No", value: id, inline: true },
-                            { name: "Rank & Name", value: `${rank} ${name}`, inline: true },
-                            { name: "Unit", value: finalUnit, inline: true },
-                            { name: "Trade", value: profession, inline: true },
-                            { name: "Section", value: section, inline: true },
-                            { name: "Duty List", value: dutyList, inline: true }
-                        ],
-                        footer: { text: "Tactical Command • " + new Date().toLocaleTimeString() },
-                        timestamp: new Date().toISOString()
-                    });
+
                 } else {
                     alert('Please fill all tactical data fields.');
                 }
@@ -1325,175 +1560,666 @@
                     await this.saveData();
                     this.renderPersonnel();
 
-                    if (soldier) {
-                        this.sendDiscordWebhook({
-                            title: "❌ Soldier Removed",
-                            color: 0xFF3333, // Red
-                            fields: [
-                                { name: "Soldier No", value: soldier.id, inline: true },
-                                { name: "Rank & Name", value: `${soldier.rank} ${soldier.name}`, inline: true },
-                                { name: "Unit", value: soldier.unit, inline: true },
-                                { name: "Reason", value: "Command Directive", inline: false }
-                            ],
-                            footer: { text: "Tactical Command • " + new Date().toLocaleTimeString() },
-                            timestamp: new Date().toISOString()
-                        });
+
+                }
+            },
+
+            showEditSoldierModal(id) {
+                const soldier = this.personnel.find(p => p.id === id);
+                if (!soldier) return;
+
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+            <div class="modal-content">
+                <h2>Edit Soldier Details</h2>
+                <div class="form-group">
+                    <label>Soldier No (Read Only)</label>
+                    <input type="text" id="edit-sol-id" value="${soldier.id}" readonly style="opacity:0.6; cursor:not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label>Rank Category</label>
+                    <select id="edit-sol-category" onchange="app.updateEditRankOptions()">
+                        <option value="">Select Category</option>
+                        ${Object.keys(this.ranksData).map(cat => `<option value="${cat}" ${soldier.category === cat ? 'selected' : ''}>${cat}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Specific Rank</label>
+                    <select id="edit-sol-rank">
+                         <!-- Populated by updateEditRankOptions -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Profession / Trade</label>
+                    <select id="edit-sol-profession">
+                        ${this.professions.map(p => `<option value="${p}" ${soldier.profession === p ? 'selected' : ''}>${p}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="edit-sol-name" value="${soldier.name}">
+                </div>
+                <div class="form-group">
+                    <label>Section</label>
+                    <select id="edit-sol-section">
+                        ${this.sections.map(s => `<option value="${s}" ${soldier.section === s ? 'selected' : ''}>${s}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Unit</label>
+                    <select id="edit-sol-unit" onchange="app.updateEditUnitSubOptions()">
+                        <option value="">Select Unit</option>
+                        ${[...new Set(["9 SIG BN", ...Object.keys(this.unitsData)])].map(unit => {
+                    const isSelected = unit === soldier.unit || (this.unitsData[unit] && this.unitsData[unit].includes(soldier.unit));
+                    return `<option value="${unit}" ${isSelected ? 'selected' : ''}>${unit}</option>`;
+                }).join('')}
+                    </select>
+                </div>
+                <div id="edit-camp-location-group" class="form-group" style="display:none;">
+                    <label>Camp Location</label>
+                    <select id="edit-sol-camp-location">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Duty List</label>
+                    <select id="edit-sol-duty-list">
+                        <option value="On" ${soldier.dutyList === 'On' ? 'selected' : ''}>On</option>
+                        <option value="Off" ${soldier.dutyList === 'Off' ? 'selected' : ''}>Off</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                    <button class="btn-primary" onclick="app.updateSoldier('${id}')">Update Soldier</button>
+                </div>
+            </div>
+        `;
+                document.body.appendChild(modal);
+
+                // Initial population of dependent dropdowns
+                this.updateEditRankOptions(soldier.rank);
+                this.updateEditUnitSubOptions(soldier.unit);
+            },
+
+            updateEditRankOptions(selectedRank = null) {
+                const category = document.getElementById('edit-sol-category').value;
+                const rankSelect = document.getElementById('edit-sol-rank');
+                rankSelect.innerHTML = '';
+
+                if (category && this.ranksData[category]) {
+                    this.ranksData[category].forEach(rank => {
+                        const opt = document.createElement('option');
+                        opt.value = rank;
+                        opt.textContent = rank;
+                        if (selectedRank === rank) opt.selected = true;
+                        rankSelect.appendChild(opt);
+                    });
+                }
+            },
+
+            // Vehicle Management System (Garir Hisab)
+            renderVehicles() {
+                this.contentArea.innerHTML = `
+            <div class="dashboard-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h1>Garir Hisab (Vehicle Management)</h1>
+                    <p>Track maintenance schedules, oil changes, and fitness dates.</p>
+                </div>
+                <button class="btn-primary" onclick="app.showAddVehicleModal()"><i class="fas fa-plus"></i> Add Vehicle</button>
+            </div>
+            
+            <div class="vehicle-grid">
+                ${this.vehicles.length > 0 ? this.vehicles.map(v => this.createVehicleCard(v)).join('') :
+                        '<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-secondary);">No vehicles registered. Add a vehicle to start tracking.</div>'}
+            </div>
+        `;
+            },
+
+            createVehicleCard(v) {
+                // Calculate Alerts
+                const kmAlerts = this.checkKmAlerts(v);
+                const dateAlerts = this.checkDateAlerts(v);
+                const hasRedAlert = kmAlerts.some(a => a.isRed) || dateAlerts.some(a => a.isRed);
+
+                return `
+            <div class="vehicle-card ${hasRedAlert ? 'alert-pulse' : ''}" style="${hasRedAlert ? 'border-color:#e74c3c;' : ''}">
+                <div class="vehicle-header">
+                    <div style="display:flex; gap:15px; align-items:center;">
+                        <div class="vehicle-icon">
+                            <i class="fas fa-truck-pickup"></i>
+                        </div>
+                        <div class="vehicle-info">
+                            <h3>${v.name}</h3>
+                            <div class="vehicle-type">${v.type}</div>
+                        </div>
+                    </div>
+                    <div class="km-badge">Current: ${v.currentKm} KM</div>
+                </div>
+
+                <div class="maintenance-list">
+                    ${this.renderMaintenanceItem('Engine Oil', v.currentKm, v.limits.engineOil, 'KM')}
+                    ${this.renderMaintenanceItem('Transmission Oil', v.currentKm, v.limits.transmissionOil, 'KM')}
+                    ${this.renderMaintenanceItem('Oil Filter', v.currentKm, v.limits.oilFilter, 'KM')}
+                    ${this.renderMaintenanceItem('Fuel Filter', v.currentKm, v.limits.fuelFilter, 'KM')}
+                    ${this.renderMaintenanceItem('Air Filter', v.currentKm, v.limits.airFilter, 'KM')}
+                    ${this.renderDateItem('Battery Change', v.dates.battery)}
+                    ${this.renderDateItem('Anti-Corrosion', v.dates.antiCorrosion)}
+                </div>
+
+                <div class="vehicle-actions">
+                    <button class="btn-primary" style="flex:1; justify-content:center;" onclick="app.showEditVehicleModal('${v.id}')">
+                        <i class="fas fa-wrench"></i> Update Status
+                    </button>
+                     <button class="btn-icon" onclick="app.deleteVehicle('${v.id}')" title="Delete Vehicle">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+            },
+
+            renderMaintenanceItem(label, current, limit, type) {
+                if (!limit) return '';
+                const remaining = limit - current;
+                const isRed = remaining <= 200;
+                const isWarning = remaining <= 500 && remaining > 200;
+                const statusClass = isRed ? 'alert' : (isWarning ? 'warning' : '');
+
+                return `
+                <div class="maintenance-item ${statusClass}">
+                    <div class="maintenance-label">
+                        <i class="fas fa-oil-can" style="font-size:0.8rem; opacity:0.7;"></i>
+                        ${label}
+                    </div>
+                    <div class="maintenance-status">
+                        ${isRed ? '<i class="fas fa-exclamation-circle"></i>' : ''} 
+                        ${remaining} KM Left
+                    </div>
+                </div>`;
+            },
+
+            renderDateItem(label, dateStr) {
+                if (!dateStr) return '';
+                const today = new Date();
+                const targetDate = new Date(dateStr);
+                const diffTime = targetDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                const isRed = diffDays <= 15;
+                const isWarning = diffDays <= 30 && diffDays > 15;
+                const statusClass = isRed ? 'alert' : (isWarning ? 'warning' : '');
+
+                return `
+                <div class="maintenance-item ${statusClass}">
+                    <div class="maintenance-label">
+                        <i class="fas fa-calendar-check" style="font-size:0.8rem; opacity:0.7;"></i>
+                        ${label}
+                    </div>
+                    <div class="maintenance-status">
+                         ${isRed ? '<i class="fas fa-exclamation-circle"></i>' : ''} 
+                        ${diffDays < 0 ? 'Expired' : `${diffDays} Days Left`}
+                    </div>
+                </div>`;
+            },
+
+            checkKmAlerts(v) {
+                const alerts = [];
+                const check = (limit, name) => {
+                    if (limit) {
+                        const remaining = limit - v.currentKm;
+                        if (remaining <= 200) alerts.push({ name, isRed: true });
                     }
+                };
+                check(v.limits.engineOil, 'Engine Oil');
+                check(v.limits.transmissionOil, 'Transmission Oil');
+                check(v.limits.oilFilter, 'Oil Filter');
+                check(v.limits.fuelFilter, 'Fuel Filter');
+                check(v.limits.airFilter, 'Air Filter');
+                return alerts;
+            },
+
+            checkDateAlerts(v) {
+                const alerts = [];
+                const check = (dateStr, name) => {
+                    if (dateStr) {
+                        const today = new Date();
+                        const targetDate = new Date(dateStr);
+                        const diffTime = targetDate - today;
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        if (diffDays <= 15) alerts.push({ name, isRed: true });
+                    }
+                };
+                check(v.dates.battery, 'Battery');
+                check(v.dates.antiCorrosion, 'Anti-Corrosion');
+                return alerts;
+            },
+
+            showAddVehicleModal() {
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+            <div class="modal-content" style="width: 500px; max-height: 90vh; overflow-y: auto;">
+                <h2>Add New Vehicle</h2>
+                <div class="form-group">
+                    <label>Vehicle Name / Reg No</label>
+                    <input type="text" id="v-name" placeholder="e.g. Jeep-1234">
+                </div>
+                <div class="form-group">
+                    <label>Vehicle Type</label>
+                    <select id="v-type">
+                        ${this.vehicleTypes.map(t => `<option value="${t}">${t}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Current KM Reading</label>
+                    <input type="number" id="v-km" placeholder="e.g. 50000">
+                </div>
+                
+                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Maintenance Limits (Next Change at KM)</h4>
+                
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label>Engine Oil Limit</label>
+                        <input type="number" id="v-lim-eng" placeholder="KM">
+                    </div>
+                    <div class="form-group">
+                        <label>Transmission Oil Limit</label>
+                        <input type="number" id="v-lim-trans" placeholder="KM">
+                    </div>
+                    <div class="form-group">
+                        <label>Oil Filter Limit</label>
+                        <input type="number" id="v-lim-oilfilt" placeholder="KM">
+                    </div>
+                    <div class="form-group">
+                        <label>Fuel Filter Limit</label>
+                        <input type="number" id="v-lim-fuelfilt" placeholder="KM">
+                    </div>
+                     <div class="form-group">
+                        <label>Air Filter Limit</label>
+                        <input type="number" id="v-lim-airfilt" placeholder="KM">
+                    </div>
+                </div>
+
+                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Expiry Dates</h4>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label>Battery Expiry</label>
+                        <input type="date" id="v-date-bat">
+                    </div>
+                    <div class="form-group">
+                        <label>Anti-Corrosion Date</label>
+                        <input type="date" id="v-date-anti">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                    <button class="btn-primary" onclick="app.addVehicle()">Add Vehicle</button>
+                </div>
+            </div>
+        `;
+                document.body.appendChild(modal);
+            },
+
+            addVehicle() {
+                const name = document.getElementById('v-name').value;
+                const type = document.getElementById('v-type').value;
+                const currentKm = parseInt(document.getElementById('v-km').value) || 0;
+
+                if (!name) { alert('Vehicle Name is required'); return; }
+
+                const newVehicle = {
+                    id: 'VEH-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                    name,
+                    type,
+                    currentKm,
+                    limits: {
+                        engineOil: parseInt(document.getElementById('v-lim-eng').value) || 0,
+                        transmissionOil: parseInt(document.getElementById('v-lim-trans').value) || 0,
+                        oilFilter: parseInt(document.getElementById('v-lim-oilfilt').value) || 0,
+                        fuelFilter: parseInt(document.getElementById('v-lim-fuelfilt').value) || 0,
+                        airFilter: parseInt(document.getElementById('v-lim-airfilt').value) || 0,
+                    },
+                    dates: {
+                        battery: document.getElementById('v-date-bat').value,
+                        antiCorrosion: document.getElementById('v-date-anti').value
+                    }
+                };
+
+                this.vehicles.push(newVehicle);
+                this.saveData();
+                this.renderVehicles();
+                document.querySelector('.modal-overlay').remove();
+            },
+
+            showEditVehicleModal(id) {
+                const v = this.vehicles.find(v => v.id === id);
+                if (!v) return;
+
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+            <div class="modal-content" style="width: 500px; max-height: 90vh; overflow-y: auto;">
+                <h2>Update Vehicle: ${v.name}</h2>
+                <div class="form-group">
+                    <label>Current KM Reading</label>
+                    <input type="number" id="edit-v-km" value="${v.currentKm}">
+                </div>
+                
+                 <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Update Maintenance Limits</h4>
+                
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label>Engine Oil Limit</label>
+                        <input type="number" id="edit-v-lim-eng" value="${v.limits.engineOil || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Transmission Oil Limit</label>
+                        <input type="number" id="edit-v-lim-trans" value="${v.limits.transmissionOil || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Oil Filter Limit</label>
+                        <input type="number" id="edit-v-lim-oilfilt" value="${v.limits.oilFilter || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Fuel Filter Limit</label>
+                        <input type="number" id="edit-v-lim-fuelfilt" value="${v.limits.fuelFilter || ''}">
+                    </div>
+                     <div class="form-group">
+                        <label>Air Filter Limit</label>
+                        <input type="number" id="edit-v-lim-airfilt" value="${v.limits.airFilter || ''}">
+                    </div>
+                </div>
+
+                <h4 style="margin-top:20px; margin-bottom:10px; color:var(--accent-color);">Update Dates</h4>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label>Battery Expiry</label>
+                        <input type="date" id="edit-v-date-bat" value="${v.dates.battery || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Anti-Corrosion Date</label>
+                        <input type="date" id="edit-v-date-anti" value="${v.dates.antiCorrosion || ''}">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                    <button class="btn-primary" onclick="app.updateVehicle('${id}')">Save Changes</button>
+                </div>
+            </div>
+        `;
+                document.body.appendChild(modal);
+            },
+
+            updateVehicle(id) {
+                const v = this.vehicles.find(v => v.id === id);
+                if (v) {
+                    v.currentKm = parseInt(document.getElementById('edit-v-km').value) || 0;
+                    v.limits.engineOil = parseInt(document.getElementById('edit-v-lim-eng').value) || 0;
+                    v.limits.transmissionOil = parseInt(document.getElementById('edit-v-lim-trans').value) || 0;
+                    v.limits.oilFilter = parseInt(document.getElementById('edit-v-lim-oilfilt').value) || 0;
+                    v.limits.fuelFilter = parseInt(document.getElementById('edit-v-lim-fuelfilt').value) || 0;
+                    v.limits.airFilter = parseInt(document.getElementById('edit-v-lim-airfilt').value) || 0;
+
+                    v.dates.battery = document.getElementById('edit-v-date-bat').value;
+                    v.dates.antiCorrosion = document.getElementById('edit-v-date-anti').value;
+
+                    this.saveData();
+                    this.renderVehicles();
+                    document.querySelector('.modal-overlay').remove();
+                }
+            },
+
+            deleteVehicle(id) {
+                if (confirm('Are you sure you want to remove this vehicle?')) {
+                    this.vehicles = this.vehicles.filter(v => v.id !== id);
+                    this.saveData();
+                    this.renderVehicles();
+                }
+            },
+
+            async updateSoldier(originalId) {
+                const name = document.getElementById('edit-sol-name').value;
+                const rank = document.getElementById('edit-sol-rank').value;
+                // ID is read-only, but we keep the original ID ref
+                const category = document.getElementById('edit-sol-category').value;
+                const unitBase = document.getElementById('edit-sol-unit').value;
+                const campLocation = document.getElementById('edit-sol-camp-location').value;
+                const section = document.getElementById('edit-sol-section').value;
+                const profession = document.getElementById('edit-sol-profession').value;
+                const dutyList = document.getElementById('edit-sol-duty-list').value;
+
+                if (name && rank) {
+                    const camps = this.unitsData[unitBase] || [];
+                    const finalUnit = camps.length > 0 ? campLocation : unitBase;
+
+                    const index = this.personnel.findIndex(p => p.id === originalId);
+                    if (index !== -1) {
+                        this.personnel[index] = {
+                            ...this.personnel[index],
+                            name,
+                            rank,
+                            category,
+                            unit: finalUnit,
+                            section,
+                            profession,
+                            dutyList
+                        };
+
+                        // Update assignments if name/rank changed?
+                        // It's tricky if name changes, as assignments link by name currently (based on addSoldier/assignPersonnel logic).
+                        // Ideally we should link by ID, but the current assignment structure uses name/rank copy.
+                        // Let's update assignments that match the OLD name/rank if possible, or just warn.
+                        // For now, simple update.
+
+                        await this.saveData();
+                        this.renderPersonnel();
+                        document.querySelector('.modal-overlay').remove();
+                    }
+                } else {
+                    alert('Please fill all required fields.');
                 }
             },
 
             renderReports() {
                 this.contentArea.innerHTML = `
-            <div class="dashboard-header">
-                <h1>Operational Reports</h1>
-                <p>Generate and view tactical deployment reports.</p>
-            </div>
-            <div class="panel">
-                <div class="panel-body p-20">
-                    <p>No active reports currently. System is gathering data from all sectors.</p>
-                    <button class="btn-primary" style="margin-top: 20px;"><i class="fas fa-file-export"></i> Export Nightly Report</button>
-                </div>
-            </div>
-        `;
+<div class="dashboard-header">
+    <h1>Operational Reports</h1>
+    <p>Generate and view tactical deployment reports.</p>
+</div>
+<div class="panel">
+    <div class="panel-body p-20">
+        <p>No active reports currently. System is gathering data from all sectors.</p>
+        <button class="btn-primary" style="margin-top: 20px;"><i class="fas fa-file-export"></i> Export Nightly
+            Report</button>
+    </div>
+</div>
+`;
             },
 
             renderSettings() {
                 this.contentArea.innerHTML = `
-            <div class="dashboard-header">
-                <h1>Tactical System Settings</h1>
-                <p>Configure command data and operational parameters.</p>
+<div class="dashboard-header">
+    <h1>Tactical System Settings</h1>
+    <p>Configure command data and operational parameters.</p>
+</div>
+
+<div class="settings-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Base Information</h2>
+        </div>
+        <div class="panel-body p-20">
+            <div class="form-group">
+                <label>Base Location</label>
+                <input type="text" value="Dhaka Cantonment" readonly
+                    style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%; margin-top:10px;">
             </div>
-            
-            <div class="settings-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-                <div class="panel">
-                    <div class="panel-header"><h2>Base Information</h2></div>
-                    <div class="panel-body p-20">
-                        <div class="form-group">
-                            <label>Base Location</label>
-                            <input type="text" value="Dhaka Cantonment" readonly style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%; margin-top:10px;">
-                        </div>
-                        <div class="form-group" style="margin-top:20px;">
-                            <label>Security Level</label>
-                            <span style="color:var(--accent-color); margin-left:10px; font-weight:bold;">LEVEL 4 - RESTRICTED</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group" style="margin-top:20px;">
+                <label>Security Level</label>
+                <span style="color:var(--accent-color); margin-left:10px; font-weight:bold;">LEVEL 4 - RESTRICTED</span>
+            </div>
+        </div>
+    </div>
 
-                <div class="panel">
-                    <div class="panel-header"><h2>Manage Trades / Professions</h2></div>
-                    <div class="panel-body p-20">
-                        <div id="profession-list" style="margin-bottom:15px; max-height: 150px; overflow-y: auto;">
-                            ${this.professions.map(p => `
-                                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px;">
-                                    <span>${p}</span>
-                                    <i class="fas fa-times" onclick="app.removeProfession('${p}')" style="color:#e74c3c; cursor:pointer; font-size:0.8rem;"></i>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div class="form-group" style="display:flex; gap:10px;">
-                            <input type="text" id="new-profession-input" placeholder="New Trade Name..." style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:8px; border-radius:4px;">
-                            <button class="btn-primary" onclick="app.addProfession()" style="padding:8px 15px;"><i class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Manage Trades / Professions</h2>
+        </div>
+        <div class="panel-body p-20">
+            <div id="profession-list" style="margin-bottom:15px; max-height: 150px; overflow-y: auto;">
+                ${this.professions.map(p => `
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px;">
+                    <span>${p}</span>
+                    <i class="fas fa-times" onclick="app.removeProfession('${p}')"
+                        style="color:#e74c3c; cursor:pointer; font-size:0.8rem;"></i>
                 </div>
+                `).join('')}
+            </div>
+            <div class="form-group" style="display:flex; gap:10px;">
+                <input type="text" id="new-profession-input" placeholder="New Trade Name..."
+                    style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:8px; border-radius:4px;">
+                <button class="btn-primary" onclick="app.addProfession()" style="padding:8px 15px;"><i
+                        class="fas fa-plus"></i></button>
+            </div>
+        </div>
+    </div>
 
-                <div class="panel">
-                    <div class="panel-header"><h2>Manage Sections</h2></div>
-                    <div class="panel-body p-20">
-                        <div id="section-list" style="margin-bottom:15px; max-height: 150px; overflow-y: auto;">
-                            ${this.sections.map(s => `
-                                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px;">
-                                    <span>${s}</span>
-                                    <i class="fas fa-times" onclick="app.removeSection('${s}')" style="color:#e74c3c; cursor:pointer; font-size:0.8rem;"></i>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div class="form-group" style="display:flex; gap:10px;">
-                            <input type="text" id="new-section-input" placeholder="New Section Name..." style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:8px; border-radius:4px;">
-                            <button class="btn-primary" onclick="app.addSection()" style="padding:8px 15px;"><i class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Manage Sections</h2>
+        </div>
+        <div class="panel-body p-20">
+            <div id="section-list" style="margin-bottom:15px; max-height: 150px; overflow-y: auto;">
+                ${this.sections.map(s => `
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px;">
+                    <span>${s}</span>
+                    <i class="fas fa-times" onclick="app.removeSection('${s}')"
+                        style="color:#e74c3c; cursor:pointer; font-size:0.8rem;"></i>
                 </div>
+                `).join('')}
+            </div>
+            <div class="form-group" style="display:flex; gap:10px;">
+                <input type="text" id="new-section-input" placeholder="New Section Name..."
+                    style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:8px; border-radius:4px;">
+                <button class="btn-primary" onclick="app.addSection()" style="padding:8px 15px;"><i
+                        class="fas fa-plus"></i></button>
+            </div>
+        </div>
+    </div>
 
-                <div class="panel">
-                    <label style="color:var(--accent-color); font-weight:bold; margin-bottom:10px; display:block;">UNIT & CAMP MANAGEMENT</label>
-                    <div id="unit-mgmt-container" style="display:grid; grid-template-columns: 1fr 1.5fr; gap:15px;">
-                        <div class="mgmt-column">
-                            <h4 style="font-size:0.8rem; margin-bottom:10px; color:var(--text-secondary);">Units</h4>
-                            <div id="unit-list" style="max-height: 200px; overflow-y: auto;">
-                                ${Object.keys(this.unitsData).map(u => `
-                                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px; cursor:pointer; border:1px solid ${this.activeSettingsUnit === u ? 'var(--accent-color)' : 'transparent'}" onclick="app.setActiveSettingsUnit('${u}')">
-                                        <span style="font-size:0.9rem;">${u}</span>
-                                        <i class="fas fa-times" onclick="event.stopPropagation(); app.removeUnit('${u}')" style="color:#e74c3c; cursor:pointer; font-size:0.7rem;"></i>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <div class="form-group" style="display:flex; gap:5px; margin-top:10px;">
-                                <input type="text" id="new-unit-input" placeholder="Unit..." style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:6px; border-radius:4px; font-size:0.8rem;">
-                                <button class="btn-primary" onclick="app.addUnit()" style="padding:4px 10px;"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="mgmt-column">
-                            <h4 style="font-size:0.8rem; margin-bottom:10px; color:var(--text-secondary);">Location/Camps for: ${this.activeSettingsUnit || 'Select Unit'}</h4>
-                            <div id="camp-list" style="max-height: 200px; overflow-y: auto;">
-                                ${this.activeSettingsUnit && this.unitsData[this.activeSettingsUnit] ? this.unitsData[this.activeSettingsUnit].map(c => `
-                                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px;">
-                                        <span style="font-size:0.9rem;">${c}</span>
-                                        <i class="fas fa-times" onclick="app.removeCamp('${this.activeSettingsUnit}', '${c}')" style="color:#e74c3c; cursor:pointer; font-size:0.7rem;"></i>
-                                    </div>
-                                `).join('') : '<div style="color:var(--text-secondary); font-size:0.8rem; text-align:center; padding-top:20px;">Select a unit to manage camps</div>'}
-                            </div>
-                            ${this.activeSettingsUnit ? `
-                                <div class="form-group" style="display:flex; gap:5px; margin-top:10px;">
-                                    <input type="text" id="new-camp-input" placeholder="Camp Name..." style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:6px; border-radius:4px; font-size:0.8rem;">
-                                    <button class="btn-primary" onclick="app.addCamp()" style="padding:4px 10px;"><i class="fas fa-plus"></i></button>
-                                </div>
-                            ` : ''}
-                        </div>
+    <div class="panel">
+        <label style="color:var(--accent-color); font-weight:bold; margin-bottom:10px; display:block;">UNIT & CAMP
+            MANAGEMENT</label>
+        <div id="unit-mgmt-container" style="display:grid; grid-template-columns: 1fr 1.5fr; gap:15px;">
+            <div class="mgmt-column">
+                <h4 style="font-size:0.8rem; margin-bottom:10px; color:var(--text-secondary);">Units</h4>
+                <div id="unit-list" style="max-height: 200px; overflow-y: auto;">
+                    ${Object.keys(this.unitsData).map(u => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px; cursor:pointer; border:1px solid ${this.activeSettingsUnit === u ? 'var(--accent-color)' : 'transparent'}"
+                        onclick="app.setActiveSettingsUnit('${u}')">
+                        <span style="font-size:0.9rem;">${u}</span>
+                        <i class="fas fa-times" onclick="event.stopPropagation(); app.removeUnit('${u}')"
+                            style="color:#e74c3c; cursor:pointer; font-size:0.7rem;"></i>
                     </div>
+                    `).join('')}
                 </div>
-
-                <div class="panel">
-                    <div class="panel-header"><h2>Cloud Backup (GitHub)</h2></div>
-                    <div class="panel-body p-20">
-                        <div class="form-group">
-                            <label>GitHub Personal Access Token (PAT)</label>
-                            <input type="password" id="gh-token" placeholder="ghp_..." value="${this.githubToken}" style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
-                            <small style="color:#aaa; display:block; margin-top:5px;">Required scope: <code>repo</code></small>
-                        </div>
-                        <div class="form-group" style="margin-top:15px; display:flex; gap:10px;">
-                            <div style="flex:1;">
-                                <label>GitHub Username</label>
-                                <input type="text" id="gh-owner" placeholder="username" value="${this.githubOwner}" style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
-                            </div>
-                            <div style="flex:1;">
-                                <label>Repository Name</label>
-                                <input type="text" id="gh-repo" placeholder="repo-name" value="${this.githubRepo}" style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top:15px;">
-                            <label>File Path</label>
-                            <input type="text" id="gh-path" placeholder="data/army_data.json" value="${this.githubPath}" style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
-                        </div>
-                        <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
-                            <button class="btn-primary" onclick="app.saveGithubSettings()"><i class="fas fa-save"></i> Save Settings</button>
-                            <button class="btn-primary" style="background:#27ae60;" onclick="app.saveToGitHub()"><i class="fas fa-cloud-upload-alt"></i> Save Data to Cloud</button>
-                            <button class="btn-secondary" onclick="app.loadFromGitHub()"><i class="fas fa-cloud-download-alt"></i> Load from Cloud</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-header"><h2>Data Management</h2></div>
-                    <div class="panel-body p-20">
-                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Warning: This will clear all personnel, assignments, and custom settings.</p>
-                        <button class="btn-primary" onclick="app.resetSystem()" style="background:#e74c3c; border:none; width:100%;">
-                            <i class="fas fa-redo"></i> Factory Reset System
-                        </button>
-                    </div>
+                <div class="form-group" style="display:flex; gap:5px; margin-top:10px;">
+                    <input type="text" id="new-unit-input" placeholder="Unit..."
+                        style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:6px; border-radius:4px; font-size:0.8rem;">
+                    <button class="btn-primary" onclick="app.addUnit()" style="padding:4px 10px;"><i
+                            class="fas fa-plus"></i></button>
                 </div>
             </div>
-        `;
+            <div class="mgmt-column">
+                <h4 style="font-size:0.8rem; margin-bottom:10px; color:var(--text-secondary);">Location/Camps for:
+                    ${this.activeSettingsUnit || 'Select Unit'}</h4>
+                <div id="camp-list" style="max-height: 200px; overflow-y: auto;">
+                    ${this.activeSettingsUnit && this.unitsData[this.activeSettingsUnit] ?
+                        this.unitsData[this.activeSettingsUnit].map(c => `
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:5px; border-radius:4px;">
+                        <span style="font-size:0.9rem;">${c}</span>
+                        <i class="fas fa-times" onclick="app.removeCamp('${this.activeSettingsUnit}', '${c}')"
+                            style="color:#e74c3c; cursor:pointer; font-size:0.7rem;"></i>
+                    </div>
+                    `).join('') : `<div
+                        style="color:var(--text-secondary); font-size:0.8rem; text-align:center; padding-top:20px;">
+                    Select a unit to manage camps</div>`}
+                </div>
+            ${this.activeSettingsUnit ? `
+                <div class="form-group" style="display:flex; gap:5px; margin-top:10px;">
+                    <input type="text" id="new-camp-input" placeholder="Camp Name..."
+                        style="flex:1; background:transparent; border:1px solid #333; color:#fff; padding:6px; border-radius:4px; font-size:0.8rem;">
+                    <button class="btn-primary" onclick="app.addCamp()" style="padding:4px 10px;"><i
+                            class="fas fa-plus"></i></button>
+                </div>
+                ` : ''
+                    }
+            </div >
+        </div >
+    </div >
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Cloud Backup (GitHub)</h2>
+        </div>
+        <div class="panel-body p-20">
+            <div class="form-group">
+                <label>GitHub Personal Access Token (PAT)</label>
+                <input type="password" id="gh-token" placeholder="ghp_..." value="${this.githubToken}"
+                    style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                <small style="color:#aaa; display:block; margin-top:5px;">Required scope: <code>repo</code></small>
+            </div>
+            <div class="form-group" style="margin-top:15px; display:flex; gap:10px;">
+                <div style="flex:1;">
+                    <label>GitHub Username</label>
+                    <input type="text" id="gh-owner" placeholder="username" value="${this.githubOwner}"
+                        style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                </div>
+                <div style="flex:1;">
+                    <label>Repository Name</label>
+                    <input type="text" id="gh-repo" placeholder="repo-name" value="${this.githubRepo}"
+                        style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:15px;">
+                <label>File Path</label>
+                <input type="text" id="gh-path" placeholder="data/army_data.json" value="${this.githubPath}"
+                    style="background:transparent; border:1px solid #333; color:#fff; padding:10px; width:100%;">
+            </div>
+            <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                <button class="btn-primary" onclick="app.saveGithubSettings()"><i class="fas fa-save"></i> Save
+                    Settings</button>
+                <button class="btn-primary" style="background:#27ae60;" onclick="app.saveToGitHub()"><i
+                        class="fas fa-cloud-upload-alt"></i> Save Data to Cloud</button>
+                <button class="btn-secondary" onclick="app.loadFromGitHub()"><i class="fas fa-cloud-download-alt"></i>
+                    Load from Cloud</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Data Management</h2>
+        </div>
+        <div class="panel-body p-20">
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Warning: This will clear all
+                personnel, assignments, and custom settings.</p>
+            <button class="btn-primary" onclick="app.resetSystem()"
+                style="background:#e74c3c; border:none; width:100%;">
+                <i class="fas fa-redo"></i> Factory Reset System
+            </button>
+        </div>
+    </div>
+</div >
+            `;
             },
 
             saveGithubSettings() {
@@ -1533,7 +2259,7 @@
                 }
 
                 if (!token) {
-                    alert('Error: GitHub Personal Access Token (PAT) is required to save data!\nPlease generate one at github.com/settings/tokens with "repo" scope.');
+                    alert('Error: GitHub Personal Access Token (PAT) is required to save data! Please generate one at github.com/settings/tokens with "repo" scope.');
                     return;
                 }
 
@@ -1548,7 +2274,7 @@
                     localStorage.setItem('github_repo', this.githubRepo);
                     localStorage.setItem('github_path', this.githubPath);
 
-                    alert(`Settings Saved!\nTarget: ${this.githubOwner}/${this.githubRepo}\nFile: ${this.githubPath}\n\nYou can now use "Save to Cloud" to push data.`);
+                    alert(`Settings Saved! Target: ${this.githubOwner}/${this.githubRepo} File: ${this.githubPath} - You can now use "Save to Cloud" to push data.`);
                     this.renderSettings();
                 } else {
                     alert('Please fill in Owner and Repo fields.');
@@ -1771,108 +2497,118 @@
                 this.renderPersonnel();
             },
 
+            setPersonnelViewMode(mode) {
+                this.personnelViewMode = mode;
+                this.renderPersonnel();
+            },
+
             renderDashboard() {
                 this.contentArea.innerHTML = `
-            <div class="dashboard-header">
-                <h1>Tactical Overview</h1>
-                <p>Real-time status of all active units and assignments.</p>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-info">
-                        <h3>Total Personnel</h3>
-                        <div class="value">${this.personnel.length}</div>
-                    </div>
-                </div>
-                <div class="stat-card active-duty">
-                    <div class="stat-icon"><i class="fas fa-crosshairs"></i></div>
-                    <div class="stat-info">
-                        <h3>Active Duty</h3>
-                        <div class="value">${this.assignments.length}</div>
-                    </div>
-                </div>
-                <div class="stat-card standby">
-                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                    <div class="stat-info">
-                        <h3>Standby</h3>
-                        <div class="value">${Math.max(0, this.personnel.length - this.assignments.length)}</div>
-                    </div>
-                </div>
-                <div class="stat-card leave">
-                    <div class="stat-icon"><i class="fas fa-umbrella-beach"></i></div>
-                    <div class="stat-info">
-                        <h3>On Leave</h3>
-                        <div class="value">0</div>
-                    </div>
-                </div>
-            </div>
+<div class="dashboard-header">
+    <h1>Tactical Overview</h1>
+    <p>Real-time status of all active units and assignments.</p>
+</div>
 
-            <div class="dashboard-content">
-                <div class="panel recent-duty">
-                    <div class="panel-header">
-                        <h2>Recent Duty Assignments</h2>
-                        <button class="btn-link">View All</button>
-                    </div>
-                    <div class="panel-body">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Personnel</th>
-                                    <th>Assignment</th>
-                                    <th>Status</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${this.assignments.slice(-5).reverse().map(a => `
-                                    <tr>
-                                        <td>${a.personnelRank} ${a.personnelName}</td>
-                                        <td>${this.posts.find(p => p.id === a.postId)?.name || 'Unknown Post'}</td>
-                                        <td><span class="status-badge active">Ongoing</span></td>
-                                        <td>${new Date().getHours()}:00 - ${(new Date().getHours() + 8) % 24}:00</td>
-                                    </tr>
-                                `).join('')}
-                                ${this.assignments.length === 0 ? '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No active assignments found</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+            <h3>Total Personnel</h3>
+            <div class="value">${this.personnel.length}</div>
+        </div>
+    </div>
+    <div class="stat-card active-duty">
+        <div class="stat-icon"><i class="fas fa-crosshairs"></i></div>
+        <div class="stat-info">
+            <h3>Active Duty</h3>
+            <div class="value">${this.assignments.length}</div>
+        </div>
+    </div>
+    <div class="stat-card standby">
+        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+        <div class="stat-info">
+            <h3>Standby</h3>
+            <div class="value">${Math.max(0, this.personnel.length - this.assignments.length)}</div>
+        </div>
+    </div>
+    <div class="stat-card leave">
+        <div class="stat-icon"><i class="fas fa-umbrella-beach"></i></div>
+        <div class="stat-info">
+            <h3>On Leave</h3>
+            <div class="value">0</div>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="panel recent-duty">
+        <div class="panel-header">
+            <h2>Recent Duty Assignments</h2>
+            <button class="btn-link">View All</button>
+        </div>
+        <div class="panel-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Personnel</th>
+                        <th>Assignment</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${this.assignments.slice(-5).reverse().map(a => `
+                    <tr>
+                        <td>${a.personnelRank} ${a.personnelName}</td>
+                        <td>${this.posts.find(p => p.id === a.postId)?.name || 'Unknown Post'}</td>
+                        <td><span class="status-badge active">Ongoing</span></td>
+                        <td>${new Date().getHours()}:00 - ${(new Date().getHours() + 8) % 24}:00</td>
+                    </tr>
+                    `).join('')}
+                    ${this.assignments.length === 0 ? `<tr>
+                        <td colspan="4" style="text-align:center; color:var(--text-secondary);">No active assignments
+                            found</td>
+                    </tr>` : ''}
+                </tbody >
+            </table >
+        </div >
+    </div >
+
+            <div class="panel alert-panel">
+                <div class="panel-header">
+                    <h2>System Alerts</h2>
                 </div>
-                
-                <div class="panel alert-panel">
-                    <div class="panel-header">
-                        <h2>System Alerts</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="alert-item high">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <div class="alert-content">
-                                <strong>Logistics Delay</strong>
-                                <p>Sect-4 Supply chain delayed by 2 hours.</p>
-                            </div>
+                <div class="panel-body">
+                    <div class="alert-item high">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="alert-content">
+                            <strong>Logistics Delay</strong>
+                            <p>Sect-4 Supply chain delayed by 2 hours.</p>
                         </div>
-                        <div class="alert-item mid">
-                            <i class="fas fa-info-circle"></i>
-                            <div class="alert-content">
-                                <strong>Shift Update</strong>
-                                <p>Evening shift for Alpha Squad rescheduled.</p>
-                            </div>
+                    </div>
+                    <div class="alert-item mid">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="alert-content">
+                            <strong>Shift Update</strong>
+                            <p>Evening shift for Alpha Squad rescheduled.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        `;
+</div >
+            `;
             },
 
             renderRoster() {
                 this.contentArea.innerHTML = `
             <div class="dashboard-header">
-                <h1>Deployment Roster</h1>
-                <div class="actions">
-                    <button class="btn-primary" onclick="app.handleTabSwitch({currentTarget: document.querySelector('[data-tab=posts]')})"><i class="fas fa-plus"></i> New Assignment</button>
-                </div>
-            </div>
+    <h1>Deployment Roster</h1>
+    <div class="actions">
+        <button class="btn-primary"
+            onclick="app.handleTabSwitch({currentTarget: document.querySelector('[data-tab=posts]')})"><i
+                class="fas fa-plus"></i> New Assignment</button>
+    </div>
+</div >
             <div class="panel">
                 <div class="panel-header">
                     <h2>Active Schedule</h2>
@@ -1892,151 +2628,246 @@
                             ${this.assignments.map(a => {
                     const soldier = this.personnel.find(p => p.name === a.personnelName);
                     return `
-                                <tr>
-                                    <td>${soldier ? soldier.id : 'N/A'}</td>
-                                    <td>${a.personnelRank} ${a.personnelName}</td>
-                                    <td>${this.posts.find(p => p.id === a.postId)?.name || 'Unknown'}</td>
-                                    <td><span style="color:var(--accent-color);">${a.shift || '08:00 - 16:00'}</span></td>
-                                    <td><span class="status-badge active">On Duty</span></td>
-                                </tr>
-                            `;
+                <tr>
+                    <td>${soldier ? soldier.id : 'N/A'}</td>
+                    <td>${a.personnelRank} ${a.personnelName}</td>
+                    <td>${this.posts.find(p => p.id === a.postId)?.name || 'Unknown'}</td>
+                    <td><span style="color:var(--accent-color);">${a.shift || '08:00 - 16:00'}</span></td>
+                    <td><span class="status-badge active">On Duty</span></td>
+                </tr>
+                `;
                 }).join('')}
-                            ${this.assignments.length === 0 ? '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary); padding: 20px;">No personnel currently on duty</td></tr>' : ''}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
+                            ${this.assignments.length === 0 ? `<tr>
+                                <td colspan="5" style="text-align:center; color:var(--text-secondary); padding: 20px;">No personnel currently on duty</td>
+                    </tr>` : ''}
+                </tbody>
+            </table>
+    </div >
+</div >
+            `;
             },
 
             renderPersonnel() {
                 const uniqueRanks = [...new Set(this.personnel.map(p => p.rank))].sort();
                 const allPossibleUnits = ["9 SIG BN", ...Object.values(this.unitsData).flat()];
 
+                // Filter Logic
+                const filteredPersonnel = this.personnel.filter(p => {
+                    const matchCategory = this.currentPersonnelFilter === 'All' || p.category === this.currentPersonnelFilter;
+                    const matchUnit = this.currentUnitFilter === 'All' || (p.unit || '9 SIG BN') === this.currentUnitFilter;
+                    const matchRank = this.currentRankFilter === 'All' || p.rank === this.currentRankFilter;
+                    const matchDuty = this.currentDutyFilter === 'All' || p.dutyList === this.currentDutyFilter;
+                    return matchCategory && matchUnit && matchRank && matchDuty;
+                });
+
+                let contentHtml = '';
+
+                if (this.personnelViewMode === 'list') {
+                    contentHtml = `
+            <table class="data-table">
+    <thead>
+        <tr>
+            <th>Soldier No</th>
+            <th>Rank</th>
+            <th>Trade</th>
+            <th>Name</th>
+            <th>Section</th>
+            <th>Unit/Camp</th>
+            <th>Duty List</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        ${filteredPersonnel.map(p => `
+        <tr>
+            <td style="font-family: 'Orbitron', sans-serif; font-size:0.8rem;">${p.id}</td>
+            <td><span style="color:var(--accent-color); font-weight:500;">${p.rank}</span></td>
+            <td style="font-size: 0.85rem; color: var(--text-secondary);">${p.profession || 'N/A'}</td>
+            <td>${p.name}</td>
+            <td style="font-size: 0.85rem;">${p.section || 'N/A'}</td>
+            <td style="font-size: 0.85rem; color: var(--accent-color);">${p.unit || '9 SIG BN'}</td>
+            <td><span class="status-badge ${p.dutyList === 'On' ? 'active' : 'completed'}">${p.dutyList === 'On' ? 'In List' : 'Excluded'}</span></td>
+            <td><span class="status-badge ${this.assignments.some(a => a.personnelName === p.name) ? 'active' : 'completed'}">${this.assignments.some(a => a.personnelName === p.name) ? 'On Duty' : 'Ready'}</span></td>
+            <td>
+                <i class="fas fa-eye view-person" data-id="${p.id}" style="color:#3498db; cursor:pointer; margin-right:10px;" title="View Profile"></i>
+                <i class="fas fa-edit edit-person" data-id="${p.id}" style="color:var(--accent-color); cursor:pointer; margin-right:10px;" title="Edit Details"></i>
+                <i class="fas fa-trash-alt delete-person" data-id="${p.id}" style="color:#e74c3c; cursor:pointer;" title="Remove Soldier"></i>
+            </td>
+        </tr>
+            `).join('')}
+    </tbody>
+</table>`;
+                } else {
+                    contentHtml = `<div class="personnel-grid">
+    ${filteredPersonnel.map(p => `
+    <div class="personnel-card">
+        <img src="https://ui-avatars.com/api/?name=${p.name}&background=d4af37&color=000&size=128" class="card-avatar"
+            alt="Avatar">
+        <div class="card-rank">${p.rank}</div>
+        <div class="card-name">${p.name}</div>
+
+        <div class="card-info">
+            <div class="info-row">
+                <span class="info-label">ID:</span>
+                <span style="font-family: 'Orbitron', sans-serif;">${p.id}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Unit:</span>
+                <span>${p.unit || '9 SIG BN'}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Trade:</span>
+                <span>${p.profession || 'N/A'}</span>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <span
+                class="status-badge ${this.assignments.some(a => a.personnelName === p.name) ? 'active' : 'completed'}">
+                ${this.assignments.some(a => a.personnelName === p.name) ? 'On Duty' : 'Ready'}
+            </span>
+        </div>
+
+        <div class="card-actions">
+            <i class="fas fa-eye view-person" data-id="${p.id}"
+                style="color:#3498db; cursor:pointer; font-size: 1.1rem;" title="View Profile"></i>
+            <i class="fas fa-edit edit-person" data-id="${p.id}"
+                style="color:var(--accent-color); cursor:pointer; font-size: 1.1rem;" title="Edit Details"></i>
+            <i class="fas fa-trash-alt delete-person" data-id="${p.id}"
+                style="color:#e74c3c; cursor:pointer; font-size: 1.1rem;" title="Remove Soldier"></i>
+        </div>
+    </div>
+    `).join('')}
+</div>`;
+                }
+
                 this.contentArea.innerHTML = `
-            <div class="dashboard-header" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h1>Personnel Registry</h1>
-                    <p>Register and manage all military personnel records.</p>
-                </div>
-                <button class="btn-primary" onclick="app.showAddSoldierModal()"><i class="fas fa-user-plus"></i> Add Soldier</button>
-            </div>
+<div class="dashboard-header" style="display:flex; justify-content:space-between; align-items:center;">
+    <div>
+        <h1>Personnel Registry</h1>
+        <p>Register and manage all military personnel records.</p>
+    </div>
+    <div style="display:flex; align-items:center; gap: 15px;">
+        <div class="view-toggles"
+            style="display:flex; gap:5px; background:rgba(255,255,255,0.05); padding:4px; border-radius:8px; border: 1px solid var(--border-color);">
+            <button class="view-mode-btn ${this.personnelViewMode === 'list' ? 'active' : ''}"
+                onclick="app.setPersonnelViewMode('list')" title="List View"><i class="fas fa-list"></i></button>
+            <button class="view-mode-btn ${this.personnelViewMode === 'grid' ? 'active' : ''}"
+                onclick="app.setPersonnelViewMode('grid')" title="Grid View"><i class="fas fa-th-large"></i></button>
+        </div>
+        <button class="btn-primary" onclick="app.showAddSoldierModal()"><i class="fas fa-user-plus"></i> Add
+            Soldier</button>
+    </div>
+</div>
 
-            <div class="filter-bar" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; background:rgba(255,255,255,0.02); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
-                <div class="filter-item">
-                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">CATEGORY</label>
-                    <select onchange="app.setRegistryFilter('currentPersonnelFilter', this.value)" style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:180px;">
-                        <option value="All" ${this.currentPersonnelFilter === 'All' ? 'selected' : ''}>All Categories</option>
-                        <option value="Officer (Class 1 Gazetted Officer)" ${this.currentPersonnelFilter === 'Officer (Class 1 Gazetted Officer)' ? 'selected' : ''}>Officers</option>
-                        <option value="Junior Commissioned Officer (JCO)" ${this.currentPersonnelFilter === 'Junior Commissioned Officer (JCO)' ? 'selected' : ''}>JCOs</option>
-                        <option value="NCOs/Soldiers" ${this.currentPersonnelFilter === 'NCOs/Soldiers' ? 'selected' : ''}>NCOs/Soldiers</option>
-                    </select>
-                </div>
+<div class="filter-bar"
+    style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; background:rgba(255,255,255,0.02); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+    <div class="filter-item">
+        <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">CATEGORY</label>
+        <select onchange="app.setRegistryFilter('currentPersonnelFilter', this.value)"
+            style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:180px;">
+            <option value="All" ${this.currentPersonnelFilter === 'All' ? 'selected' : ''}>All Categories</option>
+            <option value="Officer (Class 1 Gazetted Officer)"
+                ${this.currentPersonnelFilter === 'Officer (Class 1 Gazetted Officer)' ? 'selected' : ''}>Officers
+            </option>
+            <option value="Junior Commissioned Officer (JCO)"
+                ${this.currentPersonnelFilter === 'Junior Commissioned Officer (JCO)' ? 'selected' : ''}>JCOs</option>
+            <option value="NCOs/Soldiers" ${this.currentPersonnelFilter === 'NCOs/Soldiers' ? 'selected' : ''}>
+                NCOs/Soldiers</option>
+        </select>
+    </div>
 
-                <div class="filter-item">
-                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">UNIT/CAMP</label>
-                    <select onchange="app.setRegistryFilter('currentUnitFilter', this.value)" style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:150px;">
-                        <option value="All" ${this.currentUnitFilter === 'All' ? 'selected' : ''}>All Units</option>
-                        ${allPossibleUnits.map(u => `<option value="${u}" ${this.currentUnitFilter === u ? 'selected' : ''}>${u}</option>`).join('')}
-                    </select>
-                </div>
+    <div class="filter-item">
+        <label
+            style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">UNIT/CAMP</label>
+        <select onchange="app.setRegistryFilter('currentUnitFilter', this.value)"
+            style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:150px;">
+            <option value="All" ${this.currentUnitFilter === 'All' ? 'selected' : ''}>All Units</option>
+            ${allPossibleUnits.map(u => `<option value="${u}" ${this.currentUnitFilter === u ? 'selected' : ''}>${u}
+            </option>`).join('')}
+        </select>
+    </div>
 
-                <div class="filter-item">
-                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">RANK</label>
-                    <select onchange="app.setRegistryFilter('currentRankFilter', this.value)" style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:150px;">
-                        <option value="All" ${this.currentRankFilter === 'All' ? 'selected' : ''}>All Ranks</option>
-                        ${uniqueRanks.map(r => `<option value="${r}" ${this.currentRankFilter === r ? 'selected' : ''}>${r}</option>`).join('')}
-                    </select>
-                </div>
+    <div class="filter-item">
+        <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">RANK</label>
+        <select onchange="app.setRegistryFilter('currentRankFilter', this.value)"
+            style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:150px;">
+            <option value="All" ${this.currentRankFilter === 'All' ? 'selected' : ''}>All Ranks</option>
+            ${uniqueRanks.map(r => `<option value="${r}" ${this.currentRankFilter === r ? 'selected' : ''}>${r}</option>
+            `).join('')}
+        </select>
+    </div>
 
-                <div class="filter-item">
-                    <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">DUTY LIST</label>
-                    <select onchange="app.setRegistryFilter('currentDutyFilter', this.value)" style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:120px;">
-                        <option value="All" ${this.currentDutyFilter === 'All' ? 'selected' : ''}>All Status</option>
-                        <option value="On" ${this.currentDutyFilter === 'On' ? 'selected' : ''}>In List (On)</option>
-                        <option value="Off" ${this.currentDutyFilter === 'Off' ? 'selected' : ''}>Excluded (Off)</option>
-                    </select>
-                    <div class="filter-item" style="display:flex; align-items:flex-end;">
-                    <button onclick="app.resetFilters()" style="background:#e74c3c; border:none; color:#fff; padding:8px 15px; border-radius:4px; font-size:0.75rem; cursor:pointer; height:36px; display:flex; align-items:center; gap:5px;">
-                        <i class="fas fa-undo"></i> Reset Filters
-                    </button>
-                </div>
-            </div>
-            </div>
+    <div class="filter-item">
+        <label style="display:block; font-size:0.7rem; color:var(--text-secondary); margin-bottom:5px;">DUTY
+            LIST</label>
+        <select onchange="app.setRegistryFilter('currentDutyFilter', this.value)"
+            style="background:var(--secondary-bg); border:1px solid #444; color:#fff; padding:8px 12px; border-radius:4px; font-size:0.75rem; width:120px;">
+            <option value="All" ${this.currentDutyFilter === 'All' ? 'selected' : ''}>All Status</option>
+            <option value="On" ${this.currentDutyFilter === 'On' ? 'selected' : ''}>In List (On)</option>
+            <option value="Off" ${this.currentDutyFilter === 'Off' ? 'selected' : ''}>Excluded (Off)</option>
+        </select>
+        <div class="filter-item" style="display:flex; align-items:flex-end;">
+            <button onclick="app.resetFilters()"
+                style="background:#e74c3c; border:none; color:#fff; padding:8px 15px; border-radius:4px; font-size:0.75rem; cursor:pointer; height:36px; display:flex; align-items:center; gap:5px;">
+                <i class="fas fa-undo"></i> Reset Filters
+            </button>
+        </div>
+    </div>
+</div>
 
-            <div class="stats-grid">
-                <div class="stat-card ${this.currentPersonnelFilter === 'Officer (Class 1 Gazetted Officer)' ? 'active-filter' : ''}" 
-                     onclick="app.setRegistryFilter('currentPersonnelFilter', 'Officer (Class 1 Gazetted Officer)')" 
-                     style="cursor:pointer; transition: transform 0.2s;">
-                    <div class="stat-info">
-                        <h3>Officers</h3>
-                        <div class="value">${this.personnel.filter(p => p.category === "Officer (Class 1 Gazetted Officer)").length}</div>
-                    </div>
-                </div>
-                <div class="stat-card ${this.currentPersonnelFilter === 'Junior Commissioned Officer (JCO)' ? 'active-filter' : ''}" 
-                     onclick="app.setRegistryFilter('currentPersonnelFilter', 'Junior Commissioned Officer (JCO)')" 
-                     style="cursor:pointer; transition: transform 0.2s;">
-                    <div class="stat-info">
-                        <h3>JCOs</h3>
-                        <div class="value">${this.personnel.filter(p => p.category === "Junior Commissioned Officer (JCO)").length}</div>
-                    </div>
-                </div>
-                <div class="stat-card ${this.currentPersonnelFilter === 'NCOs/Soldiers' ? 'active-filter' : ''}" 
-                     onclick="app.setRegistryFilter('currentPersonnelFilter', 'NCOs/Soldiers')" 
-                     style="cursor:pointer; transition: transform 0.2s;">
-                    <div class="stat-info">
-                        <h3>NCOs/Soldiers</h3>
-                        <div class="value">${this.personnel.filter(p => p.category === "NCOs/Soldiers").length}</div>
-                    </div>
-                </div>
+<div class="stats-grid">
+    <div class="stat-card ${this.currentPersonnelFilter === 'Officer (Class 1 Gazetted Officer)' ? 'active-filter' : ''}"
+        onclick="app.setRegistryFilter('currentPersonnelFilter', 'Officer (Class 1 Gazetted Officer)')"
+        style="cursor:pointer; transition: transform 0.2s;">
+        <div class="stat-info">
+            <h3>Officers</h3>
+            <div class="value">${this.personnel.filter(p => p.category === "Officer (Class 1 Gazetted Officer)").length}
             </div>
-            <div class="panel">
-                <div class="panel-body">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Soldier No</th>
-                                <th>Rank</th>
-                                <th>Trade</th>
-                                <th>Name</th>
-                                <th>Section</th>
-                                <th>Unit/Camp</th>
-                                <th>Duty List</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${this.personnel
-                        .filter(p => {
-                            const matchCategory = this.currentPersonnelFilter === 'All' || p.category === this.currentPersonnelFilter;
-                            const matchUnit = this.currentUnitFilter === 'All' || (p.unit || '9 SIG BN') === this.currentUnitFilter;
-                            const matchRank = this.currentRankFilter === 'All' || p.rank === this.currentRankFilter;
-                            const matchDuty = this.currentDutyFilter === 'All' || p.dutyList === this.currentDutyFilter;
-                            return matchCategory && matchUnit && matchRank && matchDuty;
-                        })
-                        .map(p => `
-                                <tr>
-                                    <td style="font-family: 'Orbitron', sans-serif; font-size:0.8rem;">${p.id}</td>
-                                    <td><span style="color:var(--accent-color); font-weight:500;">${p.rank}</span></td>
-                                    <td style="font-size: 0.85rem; color: var(--text-secondary);">${p.profession || 'N/A'}</td>
-                                    <td>${p.name}</td>
-                                    <td style="font-size: 0.85rem;">${p.section || 'N/A'}</td>
-                                    <td style="font-size: 0.85rem; color: var(--accent-color);">${p.unit || '9 SIG BN'}</td>
-                                    <td><span class="status-badge ${p.dutyList === 'On' ? 'active' : 'completed'}">${p.dutyList === 'On' ? 'In List' : 'Excluded'}</span></td>
-                                    <td><span class="status-badge ${this.assignments.some(a => a.personnelName === p.name) ? 'active' : 'completed'}">${this.assignments.some(a => a.personnelName === p.name) ? 'On Duty' : 'Ready'}</span></td>
-                                    <td><i class="fas fa-trash-alt delete-person" data-id="${p.id}" style="color:#e74c3c; cursor:pointer;"></i></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
+        </div>
+    </div>
+    <div class="stat-card ${this.currentPersonnelFilter === 'Junior Commissioned Officer (JCO)' ? 'active-filter' : ''}"
+        onclick="app.setRegistryFilter('currentPersonnelFilter', 'Junior Commissioned Officer (JCO)')"
+        style="cursor:pointer; transition: transform 0.2s;">
+        <div class="stat-info">
+            <h3>JCOs</h3>
+            <div class="value">${this.personnel.filter(p => p.category === "Junior Commissioned Officer (JCO)").length}
             </div>
-        `;
+        </div>
+    </div>
+    <div class="stat-card ${this.currentPersonnelFilter === 'NCOs/Soldiers' ? 'active-filter' : ''}"
+        onclick="app.setRegistryFilter('currentPersonnelFilter', 'NCOs/Soldiers')"
+        style="cursor:pointer; transition: transform 0.2s;">
+        <div class="stat-info">
+            <h3>NCOs/Soldiers</h3>
+            <div class="value">${this.personnel.filter(p => p.category === "NCOs/Soldiers").length}</div>
+        </div>
+    </div>
+</div>
+<div class="panel" style="${this.personnelViewMode === 'grid' ? 'background:transparent; border:none;' : ''}">
+    <div class="panel-body" style="${this.personnelViewMode === 'grid' ? 'padding:0;' : ''}">
+        ${contentHtml}
+    </div>
+</div>
+`;
             }
         };
-
-        document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                if (typeof app === 'undefined') {
+                    throw new Error("App object is not defined. Possible syntax error in script.");
+                }
+                app.init();
+            } catch (error) {
+                console.error("Initialization Error:", error);
+                alert("Critical System Error: " + error.message);
+                const loader = document.querySelector('.dashboard-loading');
+                if (loader) loader.textContent = "System Error: " + error.message;
+            }
+        });
     </script>
 </body>
 
