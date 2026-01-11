@@ -2035,6 +2035,19 @@
             <div class="modal-content" style="width: 500px; max-height: 90vh; overflow-y: auto;">
                 <h2>Update Vehicle: ${v.name}</h2>
                 <div class="form-group">
+                    <label>Company/Unit</label>
+                    <select id="edit-v-company">
+                        <option value="BHQ COY" ${v.company === 'BHQ COY' ? 'selected' : ''}>BHQ COY</option>
+                        <option value="HQ COY" ${v.company === 'HQ COY' ? 'selected' : ''}>HQ COY</option>
+                        <option value="RDO COY" ${v.company === 'RDO COY' ? 'selected' : ''}>RDO COY</option>
+                        <option value="RR COY" ${v.company === 'RR COY' ? 'selected' : ''}>RR COY</option>
+                        <option value="OP COY" ${v.company === 'OP COY' ? 'selected' : ''}>OP COY</option>
+                        <option value="108 COY" ${v.company === '108 COY' ? 'selected' : ''}>108 COY</option>
+                        <option value="109 COY" ${v.company === '109 COY' ? 'selected' : ''}>109 COY</option>
+                        <option value="209" ${v.company === '209' ? 'selected' : ''}>209</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Current KM Reading</label>
                     <input type="number" id="edit-v-km" value="${v.currentKm}">
                 </div>
@@ -2126,6 +2139,7 @@
                 const v = this.vehicles.find(v => v.id === id);
                 if (v) {
                     v.currentKm = parseInt(document.getElementById('edit-v-km').value) || 0;
+                    v.company = document.getElementById('edit-v-company').value;
 
                     // Ensure dates object exists
                     if (!v.dates) v.dates = {};
